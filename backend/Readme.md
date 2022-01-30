@@ -4,13 +4,13 @@ This go lang project serves as backend for the GatorGiveaway project.
 
 ## Available Scripts
 
-In the project directory, you can run commands in following order
+Open the webapp directory of project in the terminal, you can run commands in following order
 
 ### `go mod tidy`
 
 installs the dependencies that are in used inside the project
 
-### `go run webapp\main.go`
+### `go run main.go`
 
 starts the webserver in debug mode
 prints out all the endpoints and port info
@@ -21,8 +21,7 @@ webapp
 |-views
 |--auth.go
 |-model
-|--login.go
-|--register.go
+|--user.go
 |-main.go
 
 ## Setup environment
