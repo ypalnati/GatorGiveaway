@@ -33,6 +33,7 @@ func main() {
 
 	// **** END POINTS ****
 	r.POST("/login", a.LoginView(db))
+	r.POST("/register", a.RegisterView(db))
 
 	// starts server and listens on port 8080
 	r.Run()
