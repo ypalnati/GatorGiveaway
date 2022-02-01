@@ -17,13 +17,13 @@ prints out all the endpoints and port info
 
 ## File Structure
 
-webapp
+```webapp
 |-views
 |--auth.go
 |-model
 |--user.go
 |-main.go
-
+```
 ## Setup environment
 
 - install [go version 1.17](https://go.dev/dl/go1.17.6.windows-amd64.msi)
