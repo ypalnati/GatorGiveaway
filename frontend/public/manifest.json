@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Gator Giveaway",
+  "name": "A webapp for Giveaways in the gators country",
   "icons": [
     {
       "src": "favicon.ico",

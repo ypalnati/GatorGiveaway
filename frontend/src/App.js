@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const callLoginApi = (e) => {
+    e.preventDefault();
+    fetch('http://localhost:8080/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: e.target.elements.username.value,
+        password: e.target.elements.password.value,
+      })
+    })
+    .then((r)=>r.json().then((json)=>console.log(json)), (r)=>{console.log(r.json().then((json)=>console.log(json)))})
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='App-header'>
+        Login
+        <form onSubmit={callLoginApi}>
+        <input type='text' placeholder='Enter username' name='username' /> <br/>
+        <input type='password' placeholder='Enter password' name='password' /> <br />
+        <input type='submit' value='login'/>
+      </form>
+      </div>
     </div>
   );
 }
