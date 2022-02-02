@@ -1,7 +1,11 @@
 import './App.css';
+import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 
 function App() {
+  const navigate = useNavigate();
   const callLoginApi = (e) => {
+    let isLoginSuccess = false
     e.preventDefault();
     fetch('http://localhost:8080/login', {
       method: 'POST',
@@ -14,7 +18,15 @@ function App() {
         password: e.target.elements.password.value,
       })
     })
-    .then((r)=>r.json().then((json)=>console.log(json)), (r)=>{console.log(r.json().then((json)=>console.log(json)))})
+    .then(
+      (r)=>{
+        if (r.status === 200)
+          navigate("/home")
+      },
+      (r)=>{
+        console.log(r.json().then((json)=>console.log(json)))
+      }
+    )
   }
 
   return (
@@ -27,6 +39,7 @@ function App() {
         <input type='submit' value='login'/>
       </form>
       </div>
+      
     </div>
   );
 }
