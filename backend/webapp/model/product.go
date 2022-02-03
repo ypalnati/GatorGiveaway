@@ -6,11 +6,11 @@ import "gorm.io/gorm"
 type Product struct {
 	gorm.Model
 	UserId      uint   `json:"-"`
-	Name        string `form:"name" json:"name" binding:"required"`
-	Description string `form:"description" json:"description" binding:"required"`
-	Location    string `form:"location" json:"location" binding:"required"`
-	Dimensions  string `form:"dimensions" json:"dimensions" binding:"required"`
-	Weight      int    `form:"weight" json:"weight" binding:"required"`
-	Age         int    `form:"age" json:"age" binding:"required"`
-	Count       int    `form:"count" json:"count" binding:"required"`
+	Name        string `form:"name" json:"name"`
+	Description string `form:"description" json:"description"`
+	Location    string `form:"location" json:"location"`
+	Dimensions  string `form:"dimensions" json:"dimensions"`
+	Weight      int    `form:"weight" json:"weight"`
+	Age         int    `form:"age" json:"age"`
+	Count       int    `form:"count" json:"count"`
 }

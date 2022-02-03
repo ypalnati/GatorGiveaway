@@ -2,6 +2,7 @@ package views
 
 import (
 	"net/http"
+	"strconv"
 	m "webapp/model"
 
 	"github.com/gin-contrib/sessions"
@@ -83,6 +84,78 @@ func GetPostView(db *gorm.DB) gin.HandlerFunc {
 
 		// return the fetched posts
 		c.JSON(http.StatusOK, posts)
+	}
+
+	// return the loginHandlerfunction
+	return gin.HandlerFunc(fn)
+}
+
+// Update post by making changes to the existing post
+func UpdatePostView(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		// Get sessions
+		session := sessions.Default(c)
+
+		// Get user id from session
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		// Get user id from session
+		uid := v.(uint)
+		postId, _ := strconv.Atoi(c.Param("postId"))
+
+		// Get the update details from the post body
+		var np m.Product
+		if err := c.ShouldBindJSON(&np); err != nil {
+			// return bad request if field names are wrong
+			// and if fields are missing
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// get the existing post
+		var op m.Product
+		db.Find(&op, "id = ? AND user_id = ?", postId, uid)
+
+		db.Model(&op).Updates(np)
+
+		c.JSON(http.StatusOK, op)
+	}
+
+	// return the loginHandlerfunction
+	return gin.HandlerFunc(fn)
+}
+
+// Delete post by post id
+func DeletePostView(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		// Get sessions
+		session := sessions.Default(c)
+
+		// Get user id from session
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		// Get user id from session
+		uid := v.(uint)
+		postId, _ := strconv.Atoi(c.Param("postId"))
+
+		var op m.Product
+		db.Find(&op, "id = ? AND user_id = ?", postId, uid)
+
+		db.Delete(&op)
+
+		c.JSON(http.StatusOK, op)
 	}
 
 	// return the loginHandlerfunction
