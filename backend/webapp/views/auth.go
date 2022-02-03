@@ -2,19 +2,25 @@ package views
 
 import (
 	"net/http"
-	l "webapp/model"
+	m "webapp/model"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/microcosm-cc/bluemonday"
 	"gorm.io/gorm"
 )
 
-// Login View - wrapper func around the main login handler method
-// this is because we have passed the db variable
-// could've passed db variable as middleware but it is strictly against doing it in go documentation
+/* Login View  - checks db for the user and password
+   -if the user doesn't exists return UnAuthorized status code
+    else return succcess code
+   -wrapper func around the main login handler method
+    this is because we have passed the db variable
+    could've passed db variable as middleware but it is strictly against doing it in go documentation
+*/
 func LoginView(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-		var json l.Login
+		session := sessions.Default(c)
+		var json m.Login
 		// try to bind the request json to the Login struct
 		if err := c.ShouldBindJSON(&json); err != nil {
 			// return bad request if field names are wrong
@@ -22,9 +28,9 @@ func LoginView(db *gorm.DB) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		var users []l.User
+		var users []m.User
 
-		// strips HTML input from user for security purpose
+		// strips HTML input from strings preventing XSS
 		p := bluemonday.StripTagsPolicy()
 		username := p.Sanitize(json.Username)
 		password := p.Sanitize(json.Password)
@@ -34,6 +40,8 @@ func LoginView(db *gorm.DB) gin.HandlerFunc {
 
 		// if user found return success
 		if len(users) > 0 {
+			session.Set("uId", users[0].ID)
+			session.Save()
 			c.JSON(http.StatusOK, gin.H{
 				"result": "login success",
 			})
@@ -50,12 +58,15 @@ func LoginView(db *gorm.DB) gin.HandlerFunc {
 	return gin.HandlerFunc(fn)
 }
 
-// Login View - wrapper func around the main login handler method
-// this is because we have passed the db variable
-// could've passed db variable as middleware but it is strictly against doing it in go documentation
+/*
+	Register View - creates a new user
+
+	if user exists or unable to create returns StatusBadRequest
+	else Status OK 200
+*/
 func RegisterView(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-		var json l.User
+		var json m.User
 		// try to bind the request json to the User struct
 		if err := c.ShouldBindJSON(&json); err != nil {
 			// return bad request if field names are wrong
@@ -64,7 +75,7 @@ func RegisterView(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
-		// strips HTML input from user for security purpose
+		// strips HTML input from strings preventing XSS
 		p := bluemonday.StripTagsPolicy()
 		json.Username = p.Sanitize(json.Username)
 		json.Password = p.Sanitize(json.Password)
@@ -73,10 +84,10 @@ func RegisterView(db *gorm.DB) gin.HandlerFunc {
 		json.Phone = p.Sanitize(json.Phone)
 
 		// check db if the username exists
-		var user l.User
+		var user m.User
 		db.Find(&user, "username = ?", json.Username)
 		// return error if the user exists
-		if user != (l.User{}) {
+		if user != (m.User{}) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Username Already Exists!"})
 			return
 		}
@@ -96,4 +107,32 @@ func RegisterView(db *gorm.DB) gin.HandlerFunc {
 
 	// return the loginHandlerfunction
 	return gin.HandlerFunc(fn)
+}
+
+// Logout view - to remove the user from the session
+func LogoutView(c *gin.Context) {
+	session := sessions.Default(c)
+
+	v := session.Get("uId")
+	if v == nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"result": "User not logged in",
+		})
+		return
+	}
+
+	session.Clear()
+	session.Save()
+
+	v = session.Get("uId")
+	if v == nil {
+		c.JSON(http.StatusOK, gin.H{
+			"result": "Logout successful",
+		})
+		return
+	}
+
+	c.JSON(http.StatusUnauthorized, gin.H{
+		"result": "Logout failed",
+	})
 }
