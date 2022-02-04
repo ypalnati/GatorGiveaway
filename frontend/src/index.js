@@ -6,12 +6,14 @@ import reportWebVitals from './reportWebVitals';
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './components/Home/Home'
+import Register from './components/Register/Register'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}></Route>
+        <Route path= "/" element={<Register />}></Route>
+        <Route path="/login" element={<App />}></Route>
         <Route path="/home" element={<Home />}></Route>
       </Routes>
     </BrowserRouter>
