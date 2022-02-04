@@ -1,6 +1,6 @@
 # First Assignment(Sprint_1) status
 
-## GatorGive away
+## GatorGiveaway
 
 Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. There are many groups, and it's very hard to keep track of those groups and posts. The idea is to provide a web-application for such sales and giveaway stuff. It's basically an eBay clone for UF.
 
@@ -9,7 +9,8 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
 - To be updated
 
 ### Go-Lang backend progress
-- To be updated
+- Create APIs for giveaway post CRUD operations for sellers.
+- Create APIs for login and registration of user.
 
 ### Api documentation of backend services
 <details>
