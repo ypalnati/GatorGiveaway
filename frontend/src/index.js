@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './components/Home/Home'
-import Register from './components/Register/Register'
 
 ReactDOM.render(
   <React.StrictMode>
