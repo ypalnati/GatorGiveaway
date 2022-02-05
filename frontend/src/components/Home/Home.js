@@ -125,33 +125,39 @@ const Home = () => {
         })
       }, [])
     return (
-        <div>
+        <div className='container'>
             <nav className="navbar navbar-light bg-light">
             <a className="navbar-brand" href="/home">
                 <img src="/logo192.png" width="30" height="30" className="d-inline-block align-top" alt="" />
                 Gator Giveaway
             </a>
+            <form className="form-inline" onSubmit={callLogoutApi}>
+                <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+            </nav>
+            <div class="d-flex flex-row-reverse bd-highlight">
+            <div class="p-2 bd-highlight">
             <form className="form-inline" onSubmit={callCreateApi}>
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPost">
                   Add Post
                 </button>
             </form>
-            <form className="form-inline" onSubmit={callLogoutApi}>
-                <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
-            </form>
-            </nav>
-            <>
+            </div>
+            </div>
+            <div className='row' style={{width: "50rem"}}>
             {posts != null? posts.map(function(c, i){
-              return (<div key={i}>
+              return (<div key={i} className="col">
                 <div className="card">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
                   <div className="card-body">
-                    Name: {c.name} <br />
-                    Description: {c.description} <br />
-                    Item location: {c.location} <br />
-                    Item Dimensions: {c.dimensions} <br />
-                    Item weight: {c.weight} <br />
-                    Period of usage: {c.age} <br />
-                    Number of Items: {c.count} <br />
+                    <h5 class="card-title">{c.name}</h5>
+                    <p class="card-text">{c.description}</p> <br />
+                    <i class="far fa-location">{c.location}</i> <br />
+                    <i class="far fa-ruler">{c.dimensions}</i> <br />
+                    <i class="far fa-weight">{c.weight}</i> <br />
+                    <i class="far fa-child" aria-hidden="true">{c.age}</i> <br />
+                    <i class="far fa-layer-group">{c.count}</i> <br />
+                    
                     <button onClick={()=>setSelectedPost(c.ID)} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPost">
                       Edit Post
                     </button>
@@ -162,7 +168,7 @@ const Home = () => {
                 </div>
               </div>)
             }): <></>}
-            </>
+            </div>
             
 
             {/* Edit Modal  */}
