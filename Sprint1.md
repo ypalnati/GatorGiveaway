@@ -13,8 +13,11 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
 - Integrated all the pages with the backend APIs and also maintaing the user session.
 
 ### Go-Lang backend progress
-- Create APIs for giveaway post CRUD operations for sellers.
-- Create APIs for login and registration of user.
+- Added boilerplate template for the back-end.
+- Using Gin Web Framework and GORM library.
+- Created APIs for giveaway post CRUD operations for sellers.
+- Created APIs for user CRUD operations.
+- Maintaing user sessions
 
 ### Api documentation of backend services
 <details>
