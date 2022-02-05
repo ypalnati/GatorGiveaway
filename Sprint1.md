@@ -151,6 +151,9 @@ Message format: json
 Example
 
 `Code: 200 OK`
+  
+  ![create_success](https://user-images.githubusercontent.com/91032296/152626808-fe772014-515a-41ab-87d7-757397937c82.gif)
+  
 </details>
 
 <details>
@@ -207,6 +210,9 @@ Message format: json
 Example
 
 `Code: 200 OK`
+  
+  ![update_success](https://user-images.githubusercontent.com/91032296/152626836-a6999e3e-cbfb-4923-bab5-90f978b6f78c.gif)
+  
 </details>
 <details>
   <summary>Delete post</summary>
@@ -246,6 +252,9 @@ Message format: json
 Example
 
 `Code: 200 OK`
+  
+  ![delete_success](https://user-images.githubusercontent.com/91032296/152626857-6bc0b585-18c7-48b1-a8ce-7ee96bb317c2.gif)
+  
 </details>
 
 <details>
@@ -274,6 +283,9 @@ Message format: json
 Example
 
 `Code: 200 OK`
+  
+  ![read_success](https://user-images.githubusercontent.com/91032296/152626871-08f2fc34-97b3-4414-af3c-008a10e8170f.gif)
+  
 </details>
 
 <details>
