@@ -19,6 +19,9 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
 - Created APIs for user CRUD operations.
 - Maintaing user sessions
 
+### Video Links:
+- [Backend Video Link(YouTube)](https://www.youtube.com/watch?v=q9oKbFjwysg)
+
 ### Api documentation of backend services
 <details>
   <summary>Login</summary>
@@ -357,5 +360,5 @@ In cards, all the giveaway posts are displayed wich can be editted and deleted.
 - [Project Kanban Board](https://github.com/raghusaripalli/GatorGiveaway/projects/1)
 
 ## Hosted on AWS:
-- [Go Lang Server Base Link](ec2-3-144-28-176.us-east-2.compute.amazonaws.com:8080)
+- [Golang Server Base URL](http://ec2-3-144-28-176.us-east-2.compute.amazonaws.com:8080)
 
