@@ -6,7 +6,11 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
 
 
 ### React JS UI Progress
-- To be updated
+- Added boilerplate template for the front end.
+- Added signup and signin pages for user.
+- Added a page to view posts.
+- Also added modals for edit, delete and creating the posts in the view posts page.
+- Integrated all the pages with the backend APIs and also maintaing the user session.
 
 ### Go-Lang backend progress
 - Create APIs for giveaway post CRUD operations for sellers.
