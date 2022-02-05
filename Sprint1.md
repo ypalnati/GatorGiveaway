@@ -353,5 +353,9 @@ In cards, all the giveaway posts are displayed wich can be editted and deleted.
 - [Main project repo link](https://github.com/raghusaripalli/GatorGiveaway) 
 - [Link for Actions on git](https://github.com/raghusaripalli/GatorGiveaway/actions/workflows/)
 - [All user stories link](https://github.com/raghusaripalli/GatorGiveaway/issues)
+- [Github Wiki Documentation link](https://github.com/raghusaripalli/GatorGiveaway/wiki)
+- [Project Kanban Board](https://github.com/raghusaripalli/GatorGiveaway/projects/1)
 
+## Hosted on AWS:
+- [Go Lang Server Base Link](ec2-3-144-28-176.us-east-2.compute.amazonaws.com:8080)
 
