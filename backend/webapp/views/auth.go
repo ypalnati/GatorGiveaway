@@ -2,6 +2,7 @@ package views
 
 import (
 	"net/http"
+	"strconv"
 	m "webapp/model"
 
 	"github.com/gin-contrib/sessions"
@@ -135,4 +136,44 @@ func LogoutView(c *gin.Context) {
 	c.JSON(http.StatusUnauthorized, gin.H{
 		"result": "Logout failed",
 	})
+}
+
+func GetAllUsers(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		var users []m.User
+		db.Find(&users)
+		c.JSON(http.StatusOK, users)
+	}
+	return gin.HandlerFunc(fn)
+}
+
+func GetUserByUsername(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		username := c.Param("username")
+		var users []m.User
+		db.Find(&users, "username = ?", username)
+		c.JSON(http.StatusOK, users)
+	}
+	return gin.HandlerFunc(fn)
+}
+
+func GetUserById(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		userId, _ := strconv.Atoi(c.Param("userId"))
+		var user m.User
+		db.First(&user, userId)
+		c.JSON(http.StatusOK, user)
+	}
+	return gin.HandlerFunc(fn)
+}
+
+func DeleteUser(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		userId, _ := strconv.Atoi(c.Param("userId"))
+		var user m.User
+		db.First(&user, userId)
+		db.Delete(&user)
+		c.JSON(http.StatusOK, user)
+	}
+	return gin.HandlerFunc(fn)
 }
