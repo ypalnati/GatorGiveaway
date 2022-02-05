@@ -21,7 +21,263 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
 
 ### Api documentation of backend services
 <details>
-  <summary>Login endpoints</summary>
+  <summary>Login</summary>
+
+### Target URL
+
+`"localhost:3000" + "/login"`
+
+### Request
+
+Method: `POST`
+
+Example
+
+```json
+{
+   "username" : "myUserName",
+   "password" : "myPASSW1234!"
+}
+```
+
+Fields
+
+| Elements | Descriptions                   | Type | Required |
+| -------- | ------------------------------ |------| -------- |
+| username | The username cannot be empty   |String|  true    |
+| password | The password cannot be empty   |String|  true    |
+
+### Response
+
+{
+    "result": "login success"
+}
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+</details>
+
+<details>
+  <summary>Register</summary>
+
+### Target URL
+
+`"localhost:3000" + "/register"`
+
+### Request
+
+Method: `POST`
+
+Example
+
+```json
+{
+   "username" : "myUserName",
+   "password" : "myPASSW1234!"
+}
+```
+
+Fields
+
+| Elements | Descriptions                   | Type | Required |
+| -------- | ------------------------------ |------| -------- |
+| username | The username cannot be empty   |String|  true    |
+| password | The password cannot be empty   |String|  true    |
+
+### Response
+
+{
+    "result": "registration success"
+}
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+</details>
+
+<details>
+  <summary>Create Post</summary>
+
+### Target URL
+
+`"localhost:3000" + "/create"`
+
+### Request
+
+Method: `POST`
+
+Example
+
+```json
+{
+    "name":"Laptop Stand",
+    "description": "Useful to put laptop in a height and at a distance.",
+    "location": "4000 SW 34th St Block #733C",
+    "dimensions": "5 x 2 x 6 m",
+    "weight":10,
+    "age": 1,
+    "count": 2
+}
+```
+
+Fields
+
+| Elements    	| Descriptions                   | Type | Required |
+| -------------	| ------------------------------ |------| -------- |
+| name	   	    | Name of the product		         |String|  true    |
+| description	  | Description of the item 	     |String|  true    |
+| location	    | Location to pickup the item    |String|  true    |
+| dimensions    | Dimensions of the item         |String|  true    |
+| weight	      | Weight of the item             |int  	|  true    |
+| age		        | Age of the item	               |int 	|  true    |
+| count		      | No pof items		               |int	  |  true    |
+
+
+### Response
+{
+    "result": "post creation success"
+}
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+</details>
+
+<details>
+  <summary>Edit post</summary>
+
+### Target URL
+
+`"localhost:3000" + "/update/<post_id>"`
+
+### Request
+
+Method: `PATCH`
+
+Example
+
+```json
+{
+    "name":"Steel Laptop Stand",
+    "weight": 11,
+    "count": 1
+}
+```
+
+Fields
+
+Same as create post fields.
+Eg: 
+{
+    "name":"Steel Laptop Stand",
+    "weight": 11,
+    "count": 1
+}
+
+### Response
+
+<Upadated post details>
+{
+    "ID": 5,
+    "CreatedAt": "2022-02-04T20:42:18.1731823-05:00",
+    "UpdatedAt": "2022-02-04T20:47:02.5941861-05:00",
+    "DeletedAt": null,
+    "name": "Steel Laptop Stand",
+    "description": "Useful to put laptop in a height and at a distance.",
+    "location": "4000 SW 34th St Block #733C",
+    "dimensions": "5 x 2 x 6 m",
+    "weight": 11,
+    "age": 1,
+    "count": 1
+}
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+</details>
+<details>
+  <summary>Delete post</summary>
+
+### Target URL
+
+`"localhost:3000" + "/delete/<post_id>"`
+
+### Request
+
+Method: `DELETE`
+
+Example
+
+localhost:8080/delete/5
+
+### Response
+
+<Deleted post details>
+{
+    "ID": 5,
+    "CreatedAt": "2022-02-04T20:42:18.1731823-05:00",
+    "UpdatedAt": "2022-02-04T20:47:02.5941861-05:00",
+    "DeletedAt": null,
+    "name": "Steel Laptop Stand",
+    "description": "Useful to put laptop in a height and at a distance.",
+    "location": "4000 SW 34th St Block #733C",
+    "dimensions": "5 x 2 x 6 m",
+    "weight": 11,
+    "age": 1,
+    "count": 1
+}
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+</details>
+
+<details>
+  <summary>Get posts</summary>
+
+### Target URL
+
+`"localhost:3000" + "/read"`
+
+### Request
+
+Method: `GET`
+
+Example
+
+localhost:8080/read
+
+### Response
+
+<All post details>
+
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+</details>
+
+<details>
+  <summary>User operations</summary>
   
   ### Get user
   - To be added
