@@ -21,6 +21,7 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
 
 ### Video Links:
 - [Backend Video Link(YouTube)](https://www.youtube.com/watch?v=q9oKbFjwysg)
+- [Frontend Video Link(YouTube)](https://youtu.be/VJ32whCfxBs)
 
 ### Api documentation of backend services
 <details>
@@ -326,15 +327,189 @@ Example
 
 <details>
   <summary>User operations</summary>
+
+
+  <details>
+  <summary>Get Users</summary>
+
+    
+  ### Target URL
+
+`"localhost:3000" + "/users"`
+
+### Request
+
+Method: `GET`
+
+Example
+
+`localhost:8080/users`
+
+### Response
+
+<Users details>
+
+```
+  [
+    {
+        "ID": 2,
+        "CreatedAt": "2022-02-04T22:39:18.8175326-05:00",
+        "UpdatedAt": "2022-02-04T22:39:18.8175326-05:00",
+        "DeletedAt": null,
+        "username": "superuser",
+        "password": "Supr@123",
+        "firstname": "Super",
+        "lastname": "User",
+        "phone": "+1 (111)-11-11111"
+    },
+    {
+        "ID": 3,
+        "CreatedAt": "2022-02-04T22:40:26.5245709-05:00",
+        "UpdatedAt": "2022-02-04T22:40:26.5245709-05:00",
+        "DeletedAt": null,
+        "username": "admin",
+        "password": "Admin@123",
+        "firstname": "Admin",
+        "lastname": "User",
+        "phone": "+1 999-99-99999"
+    },
+    {
+        "ID": 4,
+        "CreatedAt": "2022-02-04T23:35:52.370314-05:00",
+        "UpdatedAt": "2022-02-04T23:35:52.370314-05:00",
+        "DeletedAt": null,
+        "username": "User1",
+        "password": "User@123",
+        "firstname": "User First Name",
+        "lastname": "User Last Name",
+        "phone": "+1 443-77-66666"
+    },
+    {
+        "ID": 5,
+        "CreatedAt": "2022-02-04T23:41:40.2563053-05:00",
+        "UpdatedAt": "2022-02-04T23:41:40.2563053-05:00",
+        "DeletedAt": null,
+        "username": "Shangchi",
+        "password": "Shang@123",
+        "firstname": "Shang",
+        "lastname": "Chi",
+        "phone": "+1 333-22-88888"
+    },
+    {
+        "ID": 6,
+        "CreatedAt": "2022-02-04T23:46:39.8110102-05:00",
+        "UpdatedAt": "2022-02-04T23:46:39.8110102-05:00",
+        "DeletedAt": null,
+        "username": "MayaMattew",
+        "password": "Maya@123",
+        "firstname": "Maya",
+        "lastname": "Mattew",
+        "phone": "+1 333-22-88888"
+    }
+]
+```
+Possible status: 200, 400
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+  </details>
+
+
+  <details>
+  <summary>Create User</summary>
+
+
+  ### Target URL
+
+`"localhost:3000" + "/register"`
+
+### Request
+
+Method: `POST`
+
+Example
+
+`localhost:8080/users`
+
+### Input
+    
+ ```
+ {
+    "username": "superuser1",
+    "password": "Super@123",
+    "firstname": "Super",
+    "lastname": "User",
+    "phone": "+1(111)-11-11111"
+}   
+ ```
+    
+### Response
+
+<Users details>
+
+```
+{
+    "result": "registration success"
+}
+```
+Possible status: 200, 400
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+    
+  </details>
   
-  ### Get user
-  - To be added
-  ### Create user
-  - To be added
-  ### Update user
-  - To be added
-  ### Delete user
-  - To be added
+      <details>
+  <summary>Delete User</summary>
+
+
+  ### Target URL
+
+`"localhost:3000" + "/user/6"`
+
+### Request
+
+Method: `DELETE`
+
+Example
+
+`localhost:8080/user/6`
+
+    
+### Response
+
+<Delete USer details>
+
+```
+{
+    "ID": 6,
+    "CreatedAt": "2022-02-04T23:46:39.8110102-05:00",
+    "UpdatedAt": "2022-02-04T23:46:39.8110102-05:00",
+    "DeletedAt": "2022-02-04T23:58:22.7753997-05:00",
+    "username": "MayaMattew",
+    "password": "Maya@123",
+    "firstname": "Maya",
+    "lastname": "Mattew",
+    "phone": "+1 333-22-88888"
+}
+```
+Possible status: 200, 400
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+    
+  </details>
+    
+    
 </details>
 
 
