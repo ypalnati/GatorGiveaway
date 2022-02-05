@@ -59,6 +59,9 @@ Message format: json
 Example
 
 `Code: 200 OK`
+  
+  ![login_success](https://user-images.githubusercontent.com/87737522/152627688-888eda8a-2882-4a90-826f-d30e114cb4ae.gif)
+
 </details>
 
 <details>
@@ -100,6 +103,36 @@ Message format: json
 Example
 
 `Code: 200 OK`
+  
+  ![register_success](https://user-images.githubusercontent.com/87737522/152627731-69e4a622-5fa3-48db-a144-1449f0e38430.gif)
+
+</details>
+<details>
+  <summary>Logout</summary>
+
+### Target URL
+
+`"localhost:3000" + "/logout"`
+
+### Request
+
+Method: `POST`
+
+
+Field
+{
+    "result": "logout success"
+}
+Possible status: 200, 400, 401
+
+Message format: json
+
+Example
+
+`Code: 200 OK`
+![logout_success](https://user-images.githubusercontent.com/87737522/152627782-b61abec2-68d2-4a3f-86b3-b77de5910917.gif)
+
+
 </details>
 
 <details>
