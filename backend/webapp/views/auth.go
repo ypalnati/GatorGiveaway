@@ -82,6 +82,7 @@ func RegisterView(db *gorm.DB) gin.HandlerFunc {
 		json.Password = p.Sanitize(json.Password)
 		json.FirstName = p.Sanitize(json.FirstName)
 		json.LastName = p.Sanitize(json.LastName)
+		json.Email = p.Sanitize(json.Email)
 		json.Phone = p.Sanitize(json.Phone)
 
 		// check db if the username exists
