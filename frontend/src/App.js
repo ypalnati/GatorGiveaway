@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 
 function App() {
   const [registerErrors, setRegisterErrors] = useState({})
+  const [loginErrors, setLoginErrors] = useState({})
   const navigate = useNavigate();
   const callLoginApi = (e) => {
     e.preventDefault();
@@ -21,14 +22,28 @@ function App() {
     })
     .then(
       (r)=>{
-        r.json().then((rr)=>{
         if (r.status === 200)
           navigate("/home")
-        })
-        
+        else if (r.status === 401) {
+          console.log(r);
+          r.json().then((json)=>{
+            console.log(json);
+            let error = json["error"];
+            console.log(error);
+            let newLoginErrors = {...loginErrors}
+            newLoginErrors['username'] = error
+            setLoginErrors(newLoginErrors)
+          })
+        }
       },
+     
       (r)=>{
-        console.log(r.json().then((json)=>console.log(json)))
+        r.json().then((rr)=>{
+          let error = rr.json();
+            let newLoginErrors = {...loginErrors}
+            newLoginErrors['server'] = error
+            setRegisterErrors(newLoginErrors)
+        })
       }
     )
   }
@@ -46,6 +61,7 @@ function App() {
         password: e.target.elements.password.value,
         firstname: e.target.elements.firstname.value,
         lastname: e.target.elements.lastname.value,
+        email: e.target.elements.email.value,
         phone: e.target.elements.phone.value,
       })
     })
@@ -63,6 +79,16 @@ function App() {
             setRegisterErrors(newregisterErrors)
           })
         }
+          else {
+            r.json().then((json)=>{
+              let error = json["error"];
+              console.log(error);
+              let newregisterErrors = {...registerErrors}
+              newregisterErrors['server'] = error
+              setRegisterErrors(newregisterErrors)
+            })
+          }
+        
       },
       (r)=>{
         r.json().then((rr)=>{
@@ -102,6 +128,8 @@ function App() {
             <div className="tab-content col-6" id="pills-tabContent">
               <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-login-tab">
                 <form onSubmit={callLoginApi}>
+                {"server" in loginErrors?<div className='text-danger'>{loginErrors.server}</div>:''}
+                {"username" in loginErrors?<div className='text-danger'>{loginErrors.username}</div>:''}
                     <input className="form-control" type='text' placeholder='Enter username' name='username' required /> <br/>
                     <input className="form-control" type='password' placeholder='Enter password' name='password' required /> <br />
                     <input className='btn' style={{backgroundColor: "#f88745"}} type='submit' value='Submit'/>
@@ -115,6 +143,7 @@ function App() {
                 <input className="form-control" type='password' placeholder='Enter Password' name='password' required/> <br />
                 <input className="form-control" type='text' placeholder='Enter FirstName' name='firstname' required/> <br/>
                 <input className="form-control" type='text' placeholder='Enter Lastname' name='lastname' required/> <br/>
+                <input className="form-control" type='email' placeholder='Enter Email' name='email' required/> <br/>
                 <input className="form-control" type='tel' placeholder='Enter Phone Number' name='phone' required/> <br/>
                 <input className='btn' style={{backgroundColor: "#f88745"}} type='submit' value='Submit'/>
               </form>

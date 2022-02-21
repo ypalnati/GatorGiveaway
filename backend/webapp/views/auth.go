@@ -51,7 +51,7 @@ func LoginView(db *gorm.DB) gin.HandlerFunc {
 
 		// return unauthorized status
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"result": "Invalid username and password",
+			"error": "Invalid username and password",
 		})
 	}
 
