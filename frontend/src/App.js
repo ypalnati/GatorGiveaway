@@ -1,8 +1,9 @@
 import './App.css';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom'
 
 function App() {
+  const [registerErrors, setRegisterErrors] = useState({})
   const navigate = useNavigate();
   const callLoginApi = (e) => {
     e.preventDefault();
@@ -50,11 +51,26 @@ function App() {
     })
     .then(
       (r)=>{
-        if (r.status === 200)
+        if (r.status === 200) {
           navigate("/")
+        }
+        else if (r.status === 409) {
+          r.json().then((json)=>{
+            let error = json["error"];
+            console.log(error);
+            let newregisterErrors = {...registerErrors}
+            newregisterErrors['username'] = error
+            setRegisterErrors(newregisterErrors)
+          })
+        }
       },
       (r)=>{
-        console.log(r.json().then((json)=>console.log(json)))
+        r.json().then((rr)=>{
+          let error = rr.json();
+            let newregisterErrors = {...registerErrors}
+            newregisterErrors['server'] = error
+            setRegisterErrors(newregisterErrors)
+        })
       }
     )
   }
@@ -93,6 +109,8 @@ function App() {
               </div>
               <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-register-tab">
               <form onSubmit={callRegisterApi}>
+                {"server" in registerErrors?<div className='text-danger'>{registerErrors.server}</div>:''}
+                {"username" in registerErrors?<div className='text-danger'>{registerErrors.username}</div>:''}
                 <input className="form-control" type='text' placeholder='Enter Username' name='username' required/> <br/>
                 <input className="form-control" type='password' placeholder='Enter Password' name='password' required/> <br />
                 <input className="form-control" type='text' placeholder='Enter FirstName' name='firstname' required/> <br/>

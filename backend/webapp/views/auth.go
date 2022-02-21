@@ -90,7 +90,7 @@ func RegisterView(db *gorm.DB) gin.HandlerFunc {
 		db.Find(&user, "username = ?", json.Username)
 		// return error if the user exists
 		if user != (m.User{}) {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Username Already Exists!"})
+			c.JSON(http.StatusConflict, gin.H{"error": "Username Already Exists!"})
 			return
 		}
 
