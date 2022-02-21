@@ -40,7 +40,7 @@ func PostCreateView(db *gorm.DB) gin.HandlerFunc {
 		json.Description = p.Sanitize(json.Description)
 		json.Location = p.Sanitize(json.Location)
 		json.Dimensions = p.Sanitize(json.Dimensions)
-
+		json.ImageUrl = p.Sanitize(json.ImageUrl)
 		json.UserId = user.ID
 
 		// create the post
