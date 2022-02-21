@@ -2,3 +2,4 @@
 
 # executable files are not be pushed into git repository
 *.exe
+*.db
