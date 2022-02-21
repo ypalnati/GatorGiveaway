@@ -1,3 +1,12 @@
+package views
+
+import (
+	"net/http"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	m "webapp/model"
+)
+
 // Reads all posts of all sellers
 func GetPosts(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
