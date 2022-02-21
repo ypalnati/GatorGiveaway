@@ -9,6 +9,7 @@ type User struct {
 	Password  string `form:"password" json:"password" binding:"required"`
 	FirstName string `form:"firstname" json:"firstname" binding:"required"`
 	LastName  string `form:"lastname" json:"lastname" binding:"required"`
+	Email 	  string `form:"email" json:"email" binding:"required"`
 	Phone     string `form:"phone" json:"phone" binding:"required"`
 }
 
