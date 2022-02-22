@@ -10,7 +10,7 @@ const SECRET_ACCESS_KEY = 'iBfTTZUEtuke4KzIOdjHBJZUyJDrVAIEF7cuLnYd';
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const config = {
   bucketName: S3_BUCKET,
-  dirName: "/",
+  dirName: "",
   region: REGION,
   accessKeyId: ACCESS_KEY,
   secretAccessKey: SECRET_ACCESS_KEY,
@@ -21,14 +21,7 @@ const Home = () => {
   const [selectedPost, setSelectedPost] = useState()
 
   const [selectedFile, setSelectedFile] = useState(null);
-  
-  const handleUpload = async (file) => {
-    console.log(file)
-    S3FileUpload.uploadFile(file, config)
-      .then(data => {return data;})
-      .catch(err => console.error(err))
-    return null;
-  }
+
   const callLogoutApi = (e) => {
     e.preventDefault();
     fetch('http://localhost:8080/logout', {
@@ -101,28 +94,26 @@ const Home = () => {
 
   const callCreateApi = (e) => {
     e.preventDefault();
-    var res = handleUpload(selectedFile);
-    
-    //console.log(e.target.elements);
-    fetch('http://localhost:8080/create', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: e.target.elements.name.value,
-        description: e.target.elements.Description.value,
-        location: e.target.elements.Location.value,
-        dimensions: e.target.elements.Dimensions.value,
-        weight: parseInt(e.target.elements.Weight.value),
-        age: parseInt(e.target.elements.Age.value),
-        count: parseInt(e.target.elements.Count.value),
-        imageUrl: res !== null ? res.location :""
-      })
-    })
-      .then(
+    S3FileUpload.uploadFile(selectedFile, config)
+      .then(data => {
+        fetch('http://localhost:8080/create', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: e.target.elements.name.value,
+          description: e.target.elements.Description.value,
+          location: e.target.elements.Location.value,
+          dimensions: e.target.elements.Dimensions.value,
+          weight: parseInt(e.target.elements.Weight.value),
+          age: parseInt(e.target.elements.Age.value),
+          count: parseInt(e.target.elements.Count.value),
+          imageUrl: data["location"]
+        })
+      }).then(
         (r) => {
           console.log(r)
           if (r.status === 200)
@@ -132,6 +123,8 @@ const Home = () => {
           console.log(r)
         }
       )
+      })
+      .catch(err => console.error(err))
   }
 
   useEffect(() => {
