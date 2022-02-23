@@ -1,25 +1,52 @@
 package views
 
 import (
+	"fmt"
 	"net/http"
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
+	"strconv"
 	m "webapp/model"
+
+	"github.com/gin-gonic/gin"
+	"github.com/microcosm-cc/bluemonday"
+	"gorm.io/gorm"
 )
+
+var Limit int = 10
+var secure *bluemonday.Policy = bluemonday.StrictPolicy()
+
+type Posts struct {
+	Page       int
+	TotalPages int64
+	Products   []m.Product
+}
 
 // Reads all posts of all sellers
 func GetPosts(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-		
-		// fetch all posts
-		var posts []m.Product
-		db.Find(&posts)
+		page := secure.Sanitize(c.DefaultQuery("page", "1"))
+		pageNumber, err := strconv.Atoi(page)
 
-		// return the fetched posts
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": fmt.Sprintf("%s is a invalid page number", page)})
+			return
+		}
+
+		// fetch all products
+		var products []m.Product
+		db.Model(&m.Product{}).Limit(Limit).Offset((pageNumber - 1) * Limit).Find(&products)
+
+		// get total records
+		var count int64
+		db.Model(&m.Product{}).Count(&count)
+
+		// build the response json
+		totalPages := count/int64(Limit) + 1
+		posts := Posts{Page: pageNumber, TotalPages: totalPages, Products: products}
+
+		// return response json
 		c.JSON(http.StatusOK, posts)
 	}
-	
-	// return the loginHandlerfunction
+
+	// return the GetPosts
 	return gin.HandlerFunc(fn)
 }
-
