@@ -132,7 +132,7 @@ function App() {
                 {"username" in loginErrors?<div className='text-danger'>{loginErrors.username}</div>:''}
                     <input className="form-control" type='text' placeholder='Enter username' name='username' required /> <br/>
                     <input className="form-control" type='password' placeholder='Enter password' name='password' required /> <br />
-                    <input className='btn' style={{backgroundColor: "#f88745"}} type='submit' value='Submit'/>
+                    <input className='btn' style={{backgroundColor: "red"}} type='submit' value='Submit'/>
                 </form>
               </div>
               <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-register-tab">
@@ -144,7 +144,7 @@ function App() {
                 <input className="form-control" type='text' placeholder='Enter FirstName' name='firstname' required/> <br/>
                 <input className="form-control" type='text' placeholder='Enter Lastname' name='lastname' required/> <br/>
                 <input className="form-control" type='email' placeholder='Enter Email' name='email' required/> <br/>
-                <input className="form-control" type='tel' placeholder='Enter Phone Number' name='phone' required/> <br/>
+                <input className="form-control" type='tel' placeholder='Enter Ph' name='phone' required/> <br/>
                 <input className='btn' style={{backgroundColor: "#f88745"}} type='submit' value='Submit'/>
               </form>
               </div>
