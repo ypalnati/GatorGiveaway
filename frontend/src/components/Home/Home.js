@@ -127,6 +127,7 @@ const Home = () => {
   }
 
   const callCreateApi = (e) => {
+    console.log("came here")
     e.preventDefault();
     S3FileUpload.uploadFile(selectedFile, config)
       .then(data => {
@@ -180,7 +181,7 @@ const Home = () => {
   }, [])
   return (
     <div className='container'>
-      <nav className="navbar navbar-light bg-light">
+      {/* <nav className="navbar navbar-light bg-light">
         <a className="navbar-brand" href="/home">
           <img src="/logo192.png" width="30" height="30" className="d-inline-block align-top" alt="" />
           Gator Giveaway
@@ -188,7 +189,7 @@ const Home = () => {
         <form className="form-inline" onSubmit={callLogoutApi}>
           <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
         </form>
-      </nav>
+      </nav> */}
       <div class="d-flex flex-row-reverse bd-highlight">
         <div class="p-2 bd-highlight">
           <form className="form-inline" onSubmit={callCreateApi}>
@@ -226,7 +227,6 @@ const Home = () => {
 
        
       {/* <Modal Id="editPost" method={callEditApi} setSelectedFile={setSelectedFile}/>
-
        
       <Modal Id="createPost" method={callCreateApi} setSelectedFile={setSelectedFile}/> */}
 
@@ -268,7 +268,7 @@ const Home = () => {
             <div>
               <TextField fullWidth id="outlined-basic" label="Count" variant="outlined" margin="normal" />
             </div>
-            <Button variant="contained" endIcon={<SendIcon />}>
+            <Button type="submit" variant="contained" endIcon={<SendIcon />}>
               Submit
             </Button>
           </Box>
