@@ -1,8 +1,17 @@
-import './../../App.css';
-import Modal from './../Modal/Modal';
+import './../../App.css'; 
+// import Modal from './../Modal/Modal';
+import Modal from '@mui/material/Modal';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import S3FileUpload from 'react-s3';
+import Fab from '@mui/material/Fab';
+import Box from '@mui/material/Box';
+import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import SendIcon from '@mui/icons-material/Send';
+import Button from '@mui/material/Button';
 const S3_BUCKET = 's3ufsebucket';
 const REGION = 'us-east-2';
 const ACCESS_KEY = 'AKIA5S2N4Y6VJGQX6T4T';
@@ -15,12 +24,37 @@ const config = {
   accessKeyId: ACCESS_KEY,
   secretAccessKey: SECRET_ACCESS_KEY,
 }
+const style = {
+  margin: 0,
+  top: 'auto',
+  right: 30,
+  bottom: 30,
+  left: 'auto',
+  position: 'fixed',
+};
+
+const boxStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState()
   const [selectedPost, setSelectedPost] = useState()
 
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const callLogoutApi = (e) => {
     e.preventDefault();
@@ -158,9 +192,9 @@ const Home = () => {
       <div class="d-flex flex-row-reverse bd-highlight">
         <div class="p-2 bd-highlight">
           <form className="form-inline" onSubmit={callCreateApi}>
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPost">
-              Add Post
-            </button>
+            <Fab style={style} onClick={handleOpen} color="primary" aria-label="add">
+              <AddIcon />
+            </Fab>
           </form>
         </div>
       </div>
@@ -190,14 +224,56 @@ const Home = () => {
         }) : <></>}
       </div>
 
+       
+      {/* <Modal Id="editPost" method={callEditApi} setSelectedFile={setSelectedFile}/>
 
-      {/* Edit Modal  */}
-      <Modal Id="editPost" method={callEditApi} setSelectedFile={setSelectedFile}/>
+       
+      <Modal Id="createPost" method={callCreateApi} setSelectedFile={setSelectedFile}/> */}
 
-      {/* Add Modal  */}
-      <Modal Id="createPost" method={callCreateApi} setSelectedFile={setSelectedFile}/>
-
-
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="create-new-post"
+        aria-describedby="takes-user-input-to-create-a-new-post"
+      >
+        <Box sx={boxStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Create New Post
+          </Typography>
+          <Box component="form">
+            <div>
+              <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" margin="normal" />
+            </div>
+            <div>
+              <TextField fullWidth id="outlined-multiline-flexible" label="Description" multiline maxRows={4} margin="normal" />
+            </div>
+            <div>
+              <TextField fullWidth id="outlined-basic" label="Location" variant="outlined" margin="normal" />
+            </div>
+            <div>
+              <TextField fullWidth id="outlined-basic" label="Dimensions" variant="outlined" margin="normal" />
+            </div>
+            <div>
+            <TextField fullWidth margin="normal"
+                label="Weight"
+                id="outlined-start-adornment"
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">lb</InputAdornment>,
+                }}
+              />
+            </div>
+            <div>
+              <TextField fullWidth id="outlined-basic" label="Age" variant="outlined" margin="normal" />
+            </div>
+            <div>
+              <TextField fullWidth id="outlined-basic" label="Count" variant="outlined" margin="normal" />
+            </div>
+            <Button variant="contained" endIcon={<SendIcon />}>
+              Submit
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
 
     </div>
   );
