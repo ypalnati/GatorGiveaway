@@ -1,6 +1,7 @@
 package views
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	m "webapp/model"
@@ -37,7 +38,7 @@ func LoginView(db *gorm.DB) gin.HandlerFunc {
 		password := p.Sanitize(json.Password)
 
 		// DB query to search for username and password and store the results in users
-		db.Find(&users, "username = ? AND password = ?", username, password)
+		db.Find(&users, "(username = ? or email = ?) AND password = ?", username, username, password)
 
 		// if user found return success
 		if len(users) > 0 {
@@ -60,10 +61,10 @@ func LoginView(db *gorm.DB) gin.HandlerFunc {
 }
 
 /*
-	Register View - creates a new user
+   Register View - creates a new user
 
-	if user exists or unable to create returns StatusBadRequest
-	else Status OK 200
+   if user exists or unable to create returns StatusBadRequest
+   else Status OK 200
 */
 func RegisterView(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
@@ -91,6 +92,12 @@ func RegisterView(db *gorm.DB) gin.HandlerFunc {
 		// return error if the user exists
 		if user != (m.User{}) {
 			c.JSON(http.StatusConflict, gin.H{"error": "Username Already Exists!"})
+			return
+		}
+
+		db.Find(&user, "email = ?", json.Email)
+		if user != (m.User{}) {
+			c.JSON(http.StatusConflict, gin.H{"error": fmt.Sprintf("An User with the email %s exists!", json.Email)})
 			return
 		}
 
