@@ -1,22 +1,20 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 
 import './Footer.css'
 const Footer = () => (
   <div className="footer">
    
-    <div className="left">
-       
-          <p><a href="*">Contact Us</a></p>
-
-    </div>
+   
   
     <div className="center">
-     
         <p>Copyrights 2022 &copy;</p>
-     </div>
- <div className="right">
-   
-          <p><a href="*">About Us</a></p>
+    </div>
+    <div className="left">   
+      <Link className="nav-link" style={{ color: '#FFF' }} to="/contactus" >Contact Us</Link> 
+    </div>
+    <div className="right">
+      <Link className="nav-link" style={{ color: '#FFF' }} to="/aboutus">About Us</Link>   
     </div>
     
 

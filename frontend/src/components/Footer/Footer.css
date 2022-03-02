@@ -1,8 +1,9 @@
 .footer{
-    margin-top: 1rem;
+    margin-top : 1rem;
     padding: 1rem;
-    background-color: rgb(202, 198, 198);
     position: fixed;
+    background-color: orangered;   
+    /* position:fixed; */
     bottom: 0;
     left: 0;
     width: 100%;
@@ -10,17 +11,18 @@
 .content {
     text-align:center;
 }
+
 .container {
     position: relative;
 }
 .left {
     float:left;
-    color: black;
+    color: bla;
     position: absolute;
 }
 .right {
     float:right;
-    color: black;
+    color: bla;
     position: relative;
     
 }
