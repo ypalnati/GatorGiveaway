@@ -3,3 +3,6 @@
 ### React JS UI Progress
 
 ### Go-Lang backend progress
+
+
+### Video Links:
