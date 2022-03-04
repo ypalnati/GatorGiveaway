@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
 	m "webapp/model"
 
+	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,7 @@ var storeName string = "testsecret"
 var sessionName string = "testsession"
 var users []m.User
 var posts []m.Product
+var router *gin.Engine
 
 func setupTestDb(dbName string) *gorm.DB {
 	// Connection to the database with default configuration
@@ -138,8 +140,7 @@ func initData(db *gorm.DB) {
 	db.Create(&posts)
 }
 
-func TestGetAllUsers(t *testing.T) {
-
+func TestMain(m *testing.M) {
 	// setup database
 	db := setupTestDb(dbName)
 
@@ -147,7 +148,14 @@ func TestGetAllUsers(t *testing.T) {
 	initData(db)
 
 	// setup router
-	router := SetupRouter(db, storeName, sessionName)
+	router = SetupRouter(db, storeName, sessionName)
+
+	code := m.Run()
+
+	os.Exit(code)
+}
+
+func TestGetAllUsers(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/users", nil)
@@ -156,4 +164,44 @@ func TestGetAllUsers(t *testing.T) {
 	assert.Equal(t, 200, w.Code)
 	b, _ := json.Marshal(users)
 	assert.Equal(t, string(b), w.Body.String())
+}
+
+func TestGetUserByIdPassCase(t *testing.T) {
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/users/user/1", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 200, w.Code)
+	b, _ := json.Marshal(users[0])
+	assert.Equal(t, string(b), w.Body.String())
+}
+
+func TestGetUserByIdFailCase(t *testing.T) {
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/users/user/4", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 404, w.Code)
+}
+
+func TestGetUserByUsernamePassCase(t *testing.T) {
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/users/testadmin", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 200, w.Code)
+	b, _ := json.Marshal([]m.User{users[0]})
+	assert.Equal(t, string(b), w.Body.String())
+}
+
+func TestGetUserByUsernameFailCase(t *testing.T) {
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/users/testuser1", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 404, w.Code)
 }
