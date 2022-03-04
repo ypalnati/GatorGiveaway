@@ -1,25 +1,43 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import {CssBaseline, Box, Typography, Container, Link} from '@mui/material';
 
 import './Footer.css'
-const Footer = () => (
-  <div className="footer">
-   
-   
-  
-    <div className="center">
-        <p>Copyrights 2022 &copy;</p>
-    </div>
-    <div className="left">   
-      <Link className="nav-link" style={{ color: '#FFF' }} to="/contactus" >Contact Us</Link> 
-    </div>
-    <div className="right">
-      <Link className="nav-link" style={{ color: '#FFF' }} to="/aboutus">About Us</Link>   
-    </div>
-    
+import { textAlign } from "@mui/system";
 
-  </div>
-  
-);
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://github.com/raghusaripalli/GatorGiveaway">
+        Gator GiveAway Git
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-export default Footer;
+export default function Footer() {
+  return (
+    <div>
+      <CssBaseline />      
+      <Box
+        component="footer"
+        sx={{
+          py: 3,
+          px: 2,
+          mt: 'auto',
+          backgroundColor: "#01529b",
+        }}
+      >
+        <Container maxWidth="sm">
+          <Link href="/aboutus" variant="body2" color="#FFFEFE" sx={{ml:2, px: 2, align: 'left'}}>About Us</Link>
+          <Link href="/contactus" variant="body2" color="#FFFEFE" sx={{mr:2, px: 2, align: 'right'}}>Contact Us</Link>
+          <Copyright sx={{mr:2, align: 'center'}}/>
+        </Container>
+      </Box>
+
+    </div>
+          
+  );
+}

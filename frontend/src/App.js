@@ -15,18 +15,18 @@ const App = () => {
   return (
     <div title='App Root'>
       <BrowserRouter>
-       <Header></Header>
-     
-        <Routes>
-          <Route path="/" exact element={<Login />} />
-          <Route path="/home" exact element={<Home />} />
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/register" exact element={<Register />} /> 
-          <Route path="/aboutus" exact element={<AboutUs />} /> 
-          <Route path="/contactus" exact element={<ContactUs />} />
-        </Routes>
-
-        <Footer></Footer>
+        <Header/>
+          <div id="main-container">          
+            <Routes>
+              <Route path="/" exact element={<Login />} />
+              <Route path="/home" exact element={<Home />} />
+              <Route path="/login" exact element={<Login />} />
+              <Route path="/register" exact element={<Register />} /> 
+              <Route path="/aboutus" exact element={<AboutUs />} /> 
+              <Route path="/contactus" exact element={<ContactUs />} />
+            </Routes>          
+          </div>           
+        <Footer/>
       </BrowserRouter>
     </div>
   );
