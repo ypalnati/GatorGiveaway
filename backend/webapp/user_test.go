@@ -180,7 +180,7 @@ func TestGetUserByIdPassCase(t *testing.T) {
 func TestGetUserByIdFailCase(t *testing.T) {
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/users/user/4", nil)
+	req, _ := http.NewRequest("GET", "/users/user/-1", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 404, w.Code)
@@ -200,7 +200,7 @@ func TestGetUserByUsernamePassCase(t *testing.T) {
 func TestGetUserByUsernameFailCase(t *testing.T) {
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/users/testuser1", nil)
+	req, _ := http.NewRequest("GET", "/users/nouser", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 404, w.Code)

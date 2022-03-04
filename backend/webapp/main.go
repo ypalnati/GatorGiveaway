@@ -50,7 +50,9 @@ func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine 
 	r.GET("/users", v.GetAllUsers(db))
 	r.GET("/users/user/:userId", v.GetUserById(db))
 	r.GET("/users/:username", v.GetUserByUsername(db))
-	r.DELETE("/users/:userId", v.DeleteUser(db))
+	r.DELETE("/users/id/:userId", v.DeleteUserById(db))
+	r.DELETE("/users/:username", v.DeleteUserByUserName(db))
+
 	r.POST("/create", v.PostCreateView(db))
 	r.GET("/read", v.GetPostView(db))
 	r.PATCH("/update/:postId", v.UpdatePostView(db))
