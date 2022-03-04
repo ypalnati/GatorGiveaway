@@ -162,8 +162,9 @@ func GetUserByUsername(db *gorm.DB) gin.HandlerFunc {
 		db.Find(&users, "username = ?", username)
 		if len(users) == 0 {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not Found"})
+		} else {
+			c.JSON(http.StatusOK, users)
 		}
-		c.JSON(http.StatusOK, users)
 	}
 	return gin.HandlerFunc(fn)
 }
@@ -173,21 +174,44 @@ func GetUserById(db *gorm.DB) gin.HandlerFunc {
 		userId, _ := strconv.Atoi(c.Param("userId"))
 		var user m.User
 		db.First(&user, userId)
+
 		if (user == m.User{}) {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not Found"})
+		} else {
+			c.JSON(http.StatusOK, user)
 		}
-		c.JSON(http.StatusOK, user)
+
 	}
 	return gin.HandlerFunc(fn)
 }
 
-func DeleteUser(db *gorm.DB) gin.HandlerFunc {
+func DeleteUserById(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
 		userId, _ := strconv.Atoi(c.Param("userId"))
 		var user m.User
 		db.First(&user, userId)
-		db.Delete(&user)
-		c.JSON(http.StatusOK, user)
+		if (user == m.User{}) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not Found"})
+		} else {
+			db.Delete(&user)
+			c.JSON(http.StatusOK, user)
+		}
+	}
+	return gin.HandlerFunc(fn)
+}
+
+func DeleteUserByUserName(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		username := c.Param("username")
+		var user m.User
+		db.First(&user, "username = ?", username)
+		if (user == m.User{}) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not Found"})
+		} else {
+			db.Delete(&user)
+			c.JSON(http.StatusOK, user)
+		}
+
 	}
 	return gin.HandlerFunc(fn)
 }
