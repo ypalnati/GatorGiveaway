@@ -1,4 +1,5 @@
 import emailjs from "@emailjs/browser"
+import './ContactUs.css'
 
 const ContactUs = () => {
     function sendEmail(e){
@@ -16,6 +17,7 @@ const ContactUs = () => {
     return (
         <div className="container border"
             style={{marginTop:"50px",
+            marginBottom: "150px",
             width:'50%',
             backgroundImage: `url('https://www.solidbackgrounds.com/images/1920x1080/1920x1080-orange-red-solid-color-background.jpg')`,
             backgroundPosition: "center",

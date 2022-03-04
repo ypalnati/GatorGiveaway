@@ -29,7 +29,7 @@ const callLogoutApi = (e) => {
             <nav className="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <p>   </p>
                     <a className="navbar-brand" href="/home">
-                <img src="/logo-white.png" style={{marginRight:'5px'}} width="25" height="30" className="d-inline-block align-top" alt="" />
+                <img src="/logo-white.png" width="25" height="30" className="d-inline-block align-top" alt="" />
                       Gator Giveaway
                 </a>
     
