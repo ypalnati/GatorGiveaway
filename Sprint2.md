@@ -1,4 +1,4 @@
-## Sprint 2
+## Sprint 2 status
 
 ### React JS UI Progress
 
