@@ -26,21 +26,7 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
-/// Driver function which starts the server
-func main() {
-
-	// Connection to the database with default configuration
-	db, err := gorm.Open(sqlite.Open("main.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect database")
-	}
-
-	// Migrate the User model to the db
-	db.AutoMigrate(&m.User{})
-
-	// Migrate the Product Model to the db
-	db.AutoMigrate(&m.Product{})
-
+func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine {
 	// setting up the webserver with default config
 	r := gin.Default()
 
@@ -53,9 +39,9 @@ func main() {
 	// Using default recovery mechanism in case of any unexpected crashes in webserver
 	r.Use(gin.Recovery())
 
-	store := cookie.NewStore([]byte("secret"))
+	store := cookie.NewStore([]byte(storeName))
 	store.Options(sessions.Options{MaxAge: 60 * 60 * 24})
-	r.Use(sessions.Sessions("mysession", store))
+	r.Use(sessions.Sessions(sessionName, store))
 
 	// **** END POINTS ****
 	r.POST("/login", v.LoginView(db))
@@ -70,6 +56,32 @@ func main() {
 	r.PATCH("/update/:postId", v.UpdatePostView(db))
 	r.DELETE("/delete/:postId", v.DeletePostView(db))
 	r.GET("/allPosts", v.GetPosts(db))
-	// starts server and listens on port 8080
+	return r
+}
+
+func setupDb(dbName string) *gorm.DB {
+	// Connection to the database with default configuration
+	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{})
+	if err != nil {
+		panic("Failed to connect database!")
+	}
+
+	// Migrate the User & Product model to the db
+	db.AutoMigrate(&m.User{}, &m.Product{})
+
+	return db
+}
+
+/// Driver function which starts the server
+func main() {
+	dbName := "main.db"
+	storeName := "mainsecret"
+	sessionName := "mainsession"
+
+	// setup database
+	db := setupDb(dbName)
+
+	// setup router
+	r := SetupRouter(db, storeName, sessionName)
 	r.Run()
 }
