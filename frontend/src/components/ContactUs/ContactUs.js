@@ -1,4 +1,5 @@
 import emailjs from "@emailjs/browser"
+import { height } from "@mui/system";
 
 const ContactUs = () => {
     function sendEmail(e){
@@ -19,7 +20,8 @@ const ContactUs = () => {
             width:'50%',
             backgroundImage: `url('https://www.solidbackgrounds.com/images/1920x1080/1920x1080-orange-red-solid-color-background.jpg')`,
             backgroundPosition: "center",
-            backgroundSize: "cover"
+            backgroundSize: "cover",
+            height: "650px"
         }}
            >
             <h1 style={{marginTop: '25px'}}>Contact Form</h1>
