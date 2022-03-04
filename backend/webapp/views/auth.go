@@ -160,6 +160,9 @@ func GetUserByUsername(db *gorm.DB) gin.HandlerFunc {
 		username := c.Param("username")
 		var users []m.User
 		db.Find(&users, "username = ?", username)
+		if len(users) == 0 {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not Found"})
+		}
 		c.JSON(http.StatusOK, users)
 	}
 	return gin.HandlerFunc(fn)
@@ -170,6 +173,9 @@ func GetUserById(db *gorm.DB) gin.HandlerFunc {
 		userId, _ := strconv.Atoi(c.Param("userId"))
 		var user m.User
 		db.First(&user, userId)
+		if (user == m.User{}) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not Found"})
+		}
 		c.JSON(http.StatusOK, user)
 	}
 	return gin.HandlerFunc(fn)
