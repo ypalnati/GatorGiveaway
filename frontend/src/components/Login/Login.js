@@ -47,7 +47,7 @@ function Login() {
     }
     
     useEffect(() => {
-      window.loginload()
+      // window.loginload()
     }, []);
     return (
       <div>
