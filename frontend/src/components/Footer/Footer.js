@@ -16,19 +16,22 @@ function Copyright(props) {
     </Typography>
   );
 }
-
+const footerStyle = {
+      margin : 0,
+      padding: 1,
+      position: 'fixed',
+      bgcolor: '#01529b',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+  }
 export default function Footer() {
   return (
     <div>
       <CssBaseline />      
       <Box
         component="footer"
-        sx={{
-          py: 3,
-          px: 2,
-          mt: 'auto',
-          backgroundColor: "#01529b",
-        }}
+        sx={footerStyle}
       >
         <Container maxWidth="sm">
           <Link href="/aboutus" variant="body2" color="#FFFEFE" sx={{ml:2, px: 2, align: 'left'}}>About Us</Link>

@@ -1,17 +1,25 @@
 import './../../App.css'; 
-// import Modal from './../Modal/Modal';
 import Modal from '@mui/material/Modal';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import S3FileUpload from 'react-s3';
+import { styled } from '@mui/material/styles';
 import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import InputAdornment from '@mui/material/InputAdornment';
 import SendIcon from '@mui/icons-material/Send';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { red } from '@mui/material/colors';
 const S3_BUCKET = 's3ufsebucket';
 const REGION = 'us-east-2';
 const ACCESS_KEY = 'AKIA5S2N4Y6VJGQX6T4T';
@@ -32,6 +40,10 @@ const style = {
   left: 'auto',
   position: 'fixed',
 };
+
+const Input = styled('input')({
+    display: 'none',
+  });  
 
 const boxStyle = {
   position: 'absolute',
@@ -55,7 +67,9 @@ const Home = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const handleFileInput = (e) => {
+      setSelectedFile(e.target.files[0]);
+    }
   const callLogoutApi = (e) => {
     e.preventDefault();
     fetch('http://localhost:8080/logout', {
@@ -129,6 +143,7 @@ const Home = () => {
   const callCreateApi = (e) => {
     console.log("came here")
     e.preventDefault();
+    handleClose();
     S3FileUpload.uploadFile(selectedFile, config)
       .then(data => {
         fetch('http://localhost:8080/create', {
@@ -180,55 +195,57 @@ const Home = () => {
       })
   }, [])
   return (
-    <div className='container'>
-      {/* <nav className="navbar navbar-light bg-light">
-        <a className="navbar-brand" href="/home">
-          <img src="/logo192.png" width="30" height="30" className="d-inline-block align-top" alt="" />
-          Gator Giveaway
-        </a>
-        <form className="form-inline" onSubmit={callLogoutApi}>
-          <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
-        </form>
-      </nav> */}
+    <Box sx={{ flexGrow: 1 }}>
+
       <div class="d-flex flex-row-reverse bd-highlight">
-        <div class="p-2 bd-highlight">
-          <form className="form-inline" onSubmit={callCreateApi}>
-            <Fab style={style} onClick={handleOpen} color="primary" aria-label="add">
-              <AddIcon />
-            </Fab>
-          </form>
-        </div>
-      </div>
-      <div className='row' style={{ width: "50rem" }}>
-        {posts != null ? posts.map(function (c, i) {
-          return (<div key={i} className="col">
-            <div className="card">
-              <img src={c.imageUrl} alt={c.name} className="card-img-top"/>
-              <div className="card-body">
-                <h5 class="card-title">{c.name}</h5>
-                <p class="card-text">{c.description}</p> <br />
-                <i class="far fa-location">{c.location}</i> <br />
-                <i class="far fa-ruler">{c.dimensions}</i> <br />
-                <i class="far fa-weight">{c.weight}</i> <br />
-                <i class="far fa-child" aria-hidden="true">{c.age}</i> <br />
-                <i class="far fa-layer-group">{c.count}</i> <br />
-
-                <button onClick={() => setSelectedPost(c.ID)} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPost">
-                  Edit Post
-                </button>
-                <button onClick={() => callDeleteApi(c.ID)} value="Delete" className="btn btn-danger">
-                  Delete Post
-                </button>
-              </div>
-            </div>
-          </div>)
-        }) : <></>}
-      </div>
-
-       
-      {/* <Modal Id="editPost" method={callEditApi} setSelectedFile={setSelectedFile}/>
-       
-      <Modal Id="createPost" method={callCreateApi} setSelectedFile={setSelectedFile}/> */}
+        <div class="p-2 bd-highlight">
+          <form className="form-inline" onSubmit={callCreateApi}>
+            <Fab style={style} onClick={handleOpen} color="primary" aria-label="add">
+              <AddIcon />
+            </Fab>
+          </form>
+        </div>
+      </div>
+      <br /><br /><br />
+      <Grid container spacing={1}>
+        {posts != null ? posts.map(function (c, i) {
+          return (
+            <Grid item xs={4}>
+              <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  component="img"
+                  alt="green iguana"
+                  height="140"
+                  image={c.imageUrl}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {c.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Location: {c.location}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Dimensions: {c.dimensions}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Weight: {c.weight}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Product Age: {c.age}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Count: {c.count}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <EditIcon onClick={() => callEditApi(c.ID)} color="success" position="right"></EditIcon>
+                  <DeleteIcon onClick={() => callDeleteApi(c.ID)} sx={{ color: red[800] }} position="right"></DeleteIcon>
+                </CardActions>
+              </Card>
+          </Grid>)
+        }) : <></>}
+      </Grid>
 
       <Modal
         open={open}
@@ -240,42 +257,51 @@ const Home = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Create New Post
           </Typography>
-          <Box component="form">
-            <div>
-              <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" margin="normal" />
-            </div>
-            <div>
-              <TextField fullWidth id="outlined-multiline-flexible" label="Description" multiline maxRows={4} margin="normal" />
-            </div>
-            <div>
-              <TextField fullWidth id="outlined-basic" label="Location" variant="outlined" margin="normal" />
-            </div>
-            <div>
-              <TextField fullWidth id="outlined-basic" label="Dimensions" variant="outlined" margin="normal" />
-            </div>
-            <div>
-            <TextField fullWidth margin="normal"
-                label="Weight"
-                id="outlined-start-adornment"
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">lb</InputAdornment>,
-                }}
-              />
-            </div>
-            <div>
-              <TextField fullWidth id="outlined-basic" label="Age" variant="outlined" margin="normal" />
-            </div>
-            <div>
-              <TextField fullWidth id="outlined-basic" label="Count" variant="outlined" margin="normal" />
-            </div>
-            <Button type="submit" variant="contained" endIcon={<SendIcon />}>
-              Submit
-            </Button>
+          <Box>
+            <form onSubmit={callCreateApi}>
+              <div>
+                <TextField fullWidth id="outlined-basic" name="name" label="Name" variant="outlined" margin="normal" />
+              </div>
+              <div>
+                <TextField fullWidth id="outlined-multiline-flexible" name="Description" label="Description" multiline maxRows={4} margin="normal" />
+              </div>
+              <div>
+                <TextField fullWidth id="outlined-basic" name="Location" label="Location" variant="outlined" margin="normal" />
+              </div>
+              <div>
+                <TextField fullWidth id="outlined-basic" name="Dimensions" label="Dimensions" variant="outlined" margin="normal" />
+              </div>
+              <div>
+                <TextField fullWidth margin="normal"
+                    label="Weight"
+                    name = "Weight"
+                    id="outlined-start-adornment"
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">lb</InputAdornment>,
+                    }}
+                  />
+              </div>
+              <div>
+                <TextField fullWidth id="outlined-basic" name="Age" label="Age" variant="outlined" margin="normal" />
+              </div>
+              <div>
+                <TextField fullWidth id="outlined-basic" name="Count" label="Count" variant="outlined" margin="normal" />
+              </div>
+              <div>
+                 <div>React S3 File Upload</div>
+                 <input name='file' type="file" onChange={handleFileInput} />
+              </div>
+              <br/>
+              <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+                Submit
+              </Button>
+            </form>
           </Box>
         </Box>
       </Modal>
 
-    </div>
+    </Box>
+        
   );
 }
 
