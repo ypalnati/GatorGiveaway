@@ -18,6 +18,30 @@
 - Created APIs to test the APIs that read, create, delete, edit posts.
 - Covered all the cases to test valid and invalid cases.
 
+### Cypress Tests
+Steps:-
+```
+npm install cypress
+```
+In package.json :-
+```
+"scripts": {
+    [....]
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress": "cypress open"
+  },
+```
+To Run :-
+```
+npm run cypress
+```
+Output:-
+![cypress_test](https://user-images.githubusercontent.com/22216660/156867093-b4bf867c-2949-4b42-9464-a878d3bf4668.gif)
+
+
+### Unit
+
 ### Video Links:
 
 ### Api documentation of backend services
