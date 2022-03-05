@@ -40,7 +40,27 @@ Output:-
 ![cypress_test](https://user-images.githubusercontent.com/22216660/156867093-b4bf867c-2949-4b42-9464-a878d3bf4668.gif)
 
 
-### Unit
+### Unit Tests Frontend
+Steps to run :-
+```
+cd frontend
+npm test
+```
+Output:
+![unit_test_frontend](https://user-images.githubusercontent.com/22216660/156868294-c11bdcbf-5e0a-4864-b7cb-4d5d2a6c001c.gif)
+
+
+
+### Unit tests Backend
+Steps to run :-
+```
+cd backend
+cd webapp
+go test -v 
+```
+Output:-
+
+![back_end_unit_tests](https://user-images.githubusercontent.com/22216660/156868320-8dc8d2de-4c71-4923-b256-dd1d668f90fc.gif)
 
 ### Video Links:
 
