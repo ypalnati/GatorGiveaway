@@ -64,6 +64,11 @@ Output:-
 
 ### Video Links:
 
+[Backend Demo](https://youtu.be/LNu_3BJMTxA)
+
+
+[Front end Full Integration Demo](https://www.youtube.com/watch?v=vA0G7OwYMA0)
+
 ### Api documentation of backend services
 <details>
   <summary>Buyers view</summary>
