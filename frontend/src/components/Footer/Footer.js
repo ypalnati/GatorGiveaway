@@ -32,7 +32,7 @@ export default function Footer() {
       >
         <Container maxWidth="sm">
           <Link href="/aboutus" variant="body2" color="#FFFEFE" sx={{ml:2, px: 2, align: 'left'}}>About Us</Link>
-          <Link href="/contactus" variant="body2" color="#FFFEFE" sx={{mr:2, px: 2, align: 'right'}}>Contact Us</Link>
+          <Link id="contactus" href="/contactus" variant="body2" color="#FFFEFE" sx={{mr:2, px: 2, align: 'right'}}>Contact Us</Link>
           <Copyright sx={{mr:2, align: 'center'}}/>
         </Container>
       </Box>
