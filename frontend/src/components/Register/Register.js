@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom'
+import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography, Container} from '@mui/material'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Register() {
     const [registerErrors, setRegisterErrors] = useState({})
-  
+    const theme = createTheme();
     const navigate = useNavigate();
   
     const callRegisterApi = (e) => {
@@ -63,35 +66,115 @@ function Register() {
       window.loginload()
     }, []);
     return (
-      <div>
-   
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col'>
-              <img className='img-fluid' src='/2gators.jfif' alt=''/>
-            </div>
-            <div className='col'>
-              <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-               
-              </ul>
-            
-                <div className="tab-pane active" id="pills-profile" role="tabpanel" aria-labelledby="pills-register-tab">
-                <form onSubmit={callRegisterApi}>
-                  {"server" in registerErrors?<div className='text-danger'>{registerErrors.server}</div>:''}
-                  {"username" in registerErrors?<div className='text-danger'>{registerErrors.username}</div>:''}
-                  <input className="form-control" type='text' placeholder='Enter Username' name='username' required/> <br/>
-                  <input className="form-control" type='password' placeholder='Enter Password' name='password' required/> <br />
-                  <input className="form-control" type='text' placeholder='Enter FirstName' name='firstname' required/> <br/>
-                  <input className="form-control" type='text' placeholder='Enter Lastname' name='lastname' required/> <br/>
-                  <input className="form-control" type='email' placeholder='Enter Email' name='email' required/> <br/>
-                  <input className="form-control" type='tel' placeholder='Enter Ph' name='phone' required/> <br/>
-                  <input className='btn' style={{backgroundColor: "#f88745"}} type='submit' value='Submit'/>
-                </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate onSubmit={callRegisterApi} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="userName"
+                  name="username"
+                  label="UserName"
+                  autoComplete="username"
+                />                
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstname"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastname"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone Number"
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel-country-code"
+                />
+              </Grid>              
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="Allow to receive updates via email."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 2, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>        
+      </Container>
+    </ThemeProvider>      
    
     );
   }

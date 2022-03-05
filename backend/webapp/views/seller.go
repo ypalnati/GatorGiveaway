@@ -90,6 +90,43 @@ func GetPostView(db *gorm.DB) gin.HandlerFunc {
 	return gin.HandlerFunc(fn)
 }
 
+// Reads posts of a particular seller
+func GetSinglePostView(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		// Get sessions
+		session := sessions.Default(c)
+
+		// Get user id from session
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		// Get user id from session
+		uid := v.(uint)
+
+		// fetch posts based on user_id
+		var posts m.Product
+		postId, _ := strconv.Atoi(c.Param("postId"))
+
+		db.Find(&posts, "id = ?", postId, uid)
+
+		if (posts == m.Product{}) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Requested post is not found"})
+			return
+		}
+
+		// return the fetched posts
+		c.JSON(http.StatusOK, posts)
+	}
+
+	// return the loginHandlerfunction
+	return gin.HandlerFunc(fn)
+}
+
 // Update post by making changes to the existing post
 func UpdatePostView(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
@@ -152,7 +189,10 @@ func DeletePostView(db *gorm.DB) gin.HandlerFunc {
 
 		var op m.Product
 		db.Find(&op, "id = ? AND user_id = ?", postId, uid)
-
+		if (op == m.Product{}) {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Requested post is not found"})
+			return
+		}
 		db.Delete(&op)
 
 		c.JSON(http.StatusOK, op)
