@@ -14,7 +14,7 @@ test('Header component render test', () => {
    
     ); 
     screen.getB
-    const linkElement = screen.getByText('Gator Giveaway')
+    const linkElement = screen.getByRole("button")
     expect(linkElement).toBeInTheDocument();
    
     
