@@ -36,14 +36,10 @@ const style = {
   margin: 0,
   top: 'auto',
   right: 30,
-  bottom: 30,
+  bottom: 75,
   left: 'auto',
   position: 'fixed',
-};
-
-const Input = styled('input')({
-    display: 'none',
-  });  
+}; 
 
 const boxStyle = {
   position: 'absolute',
@@ -196,7 +192,6 @@ const Home = () => {
   }, [])
   return (
     <Box sx={{ flexGrow: 1 }}>
-
       <div class="d-flex flex-row-reverse bd-highlight">
         <div class="p-2 bd-highlight">
           <form className="form-inline" onSubmit={callCreateApi}>
@@ -206,7 +201,7 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <br /><br /><br />
+      
       <Grid container spacing={1}>
         {posts != null ? posts.map(function (c, i) {
           return (
@@ -288,10 +283,9 @@ const Home = () => {
                 <TextField fullWidth id="outlined-basic" name="Count" label="Count" variant="outlined" margin="normal" />
               </div>
               <div>
-                 <div>React S3 File Upload</div>
-                 <input name='file' type="file" onChange={handleFileInput} />
-              </div>
-              <br/>
+              <div>React S3 File Upload</div>
+                <input name='file' type="file" onChange={handleFileInput} />
+              </div>
               <Button type="submit" variant="contained" endIcon={<SendIcon />}>
                 Submit
               </Button>
