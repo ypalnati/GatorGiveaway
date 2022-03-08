@@ -70,7 +70,7 @@ func setupDb(dbName string) *gorm.DB {
 	}
 
 	// Migrate the User & Product model to the db
-	db.AutoMigrate(&m.User{}, &m.Product{})
+	db.AutoMigrate(&m.User{}, &m.Product{}, &m.Order{})
 
 	return db
 }
