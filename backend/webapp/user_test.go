@@ -32,9 +32,11 @@ func setupTestDb(dbName string) *gorm.DB {
 	// drop tables if exist
 	db.Migrator().DropTable(&m.User{})
 	db.Migrator().DropTable(&m.Product{})
+	db.Migrator().DropTable(&m.Post{})
+	db.Migrator().DropTable(&m.Order{})
 
 	// Migrate the User & Product model to the db
-	db.AutoMigrate(&m.User{}, &m.Product{})
+	db.AutoMigrate(&m.User{}, &m.Product{}, &m.Post{}, &m.Order{})
 
 	return db
 }
