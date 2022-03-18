@@ -48,3 +48,26 @@ func TestPlaceOrderPassCase(t *testing.T) {
 		assert.Equal(t, 200, nr.Code)
 	}
 }
+
+func TestPlaceOrderNotLoggedInFailCase(t *testing.T) {
+	order := m.Order{
+		UserId: 1,
+		Posts: []m.Post{
+			{
+				Count:     1,
+				ProductId: 1,
+			},
+			{
+				Count:     2,
+				ProductId: 1,
+			},
+		},
+	}
+
+	nr := httptest.NewRecorder()
+	body, _ := json.Marshal(order)
+	req, _ := http.NewRequest("POST", "/placeOrder", strings.NewReader(string(body)))
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(nr, req)
+	assert.Equal(t, http.StatusUnauthorized, nr.Code)
+}
