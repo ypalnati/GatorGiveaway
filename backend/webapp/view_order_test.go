@@ -71,3 +71,31 @@ func TestPlaceOrderNotLoggedInFailCase(t *testing.T) {
 	router.ServeHTTP(nr, req)
 	assert.Equal(t, http.StatusUnauthorized, nr.Code)
 }
+
+func TestPlaceOrderJsonFieldsMissing(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	if nr.Code == 200 {
+		order := m.Order{
+			UserId: 1,
+			Posts:  nil,
+		}
+		nr.Flush()
+		body, _ := json.Marshal(order)
+		req, _ := http.NewRequest("POST", "/placeOrder", strings.NewReader(string(body)))
+		req.Header.Set("Content-Type", "application/json")
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+		assert.Equal(t, http.StatusOK, nr.Code)
+	}
+}
