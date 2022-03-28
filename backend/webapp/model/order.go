@@ -5,9 +5,9 @@ import "gorm.io/gorm"
 type OrderStatus int
 
 const (
-	PENDING OrderStatus = iota
-	CONFIRMED
-	CANCELLED
+	PENDING   OrderStatus = iota
+	CONFIRMED             //status =1
+	CANCELLED             //status =2
 )
 
 type Post struct {
