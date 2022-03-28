@@ -28,7 +28,7 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine {
 	// setting up the webserver with default config
-    //r := gin.Default()
+	//r := gin.Default()
 	r := gin.New()
 
 	// Check every request if allowed for CORS
@@ -61,6 +61,7 @@ func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine 
 	r.DELETE("/delete/:postId", v.DeletePostView(db))
 	r.GET("/allPosts", v.GetPosts(db))
 	r.GET("/orders/", v.GetUserOrdersView(db))
+	r.GET("/order/:orderId", v.GetParticularOrder(db))
 	r.GET("/allOrders", v.GetAllOrders(db))
 	r.POST("/placeOrder", v.PlaceOrder(db))
 	r.POST("/cancelOrder/:orderId", v.CancelOrderView(db))

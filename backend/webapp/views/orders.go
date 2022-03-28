@@ -80,6 +80,44 @@ func GetAllOrders(db *gorm.DB) gin.HandlerFunc {
 	return gin.HandlerFunc(fn)
 }
 
+// Ftech a particular order
+func GetParticularOrder(db *gorm.DB) gin.HandlerFunc {
+
+	fn := func(c *gin.Context) {
+		// Get sessions
+		session := sessions.Default(c)
+
+		// Get user id from session
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		// Get user id from session
+		uid := v.(uint)
+		//take order id from params
+		orderId, _ := strconv.Atoi(c.Param("orderId"))
+
+		// fetch orders based on user_id
+		var order m.Order
+		db.Find(&order, "user_id = ? AND order_id = ?", uid, orderId)
+
+		var posts []m.Post
+		db.Find(&posts, "order_id = ?", orderId)
+
+		order.Posts = posts
+
+		// return the fetched orders
+		c.JSON(http.StatusOK, order)
+	}
+
+	// return the loginHandlerfunction
+	return gin.HandlerFunc(fn)
+}
+
 /*
  * Register User Order
  * Validate the user login
