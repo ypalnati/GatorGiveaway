@@ -128,3 +128,25 @@ func TestCancelOrderUserNotLoggedInCase(t *testing.T) {
 	router.ServeHTTP(nr, req)
 	assert.Equal(t, http.StatusBadRequest, nr.Code)
 }
+
+func TestCancelOrderOrderNotExistsCase(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	if nr.Code == 200 {
+		nr.Flush()
+		req, _ := http.NewRequest("POST", "/placeOrder/100", nil)
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+		assert.Equal(t, http.StatusOK, nr.Code)
+	}
+}
