@@ -121,3 +121,10 @@ func TestCancelOrderSuccessCase(t *testing.T) {
 		assert.Equal(t, 200, nr.Code)
 	}
 }
+
+func TestCancelOrderUserNotLoggedInCase(t *testing.T) {
+	nr := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/placeOrder/1", nil)
+	router.ServeHTTP(nr, req)
+	assert.Equal(t, http.StatusBadRequest, nr.Code)
+}
