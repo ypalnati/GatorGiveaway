@@ -81,6 +81,13 @@ func TestGetParticularOrderPassCase(t *testing.T) {
 	}
 
 }
+func TestGetParticularOrderUserNotLoggedInCase(t *testing.T) {
+	nr := httptest.NewRecorder()
+	req, _ := http.NewRequest("POST", "/order/1", nil)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(nr, req)
+	assert.Equal(t, 404, nr.Code)
+}
 
 func TestGetParticularOrderFailCase(t *testing.T) {
 
