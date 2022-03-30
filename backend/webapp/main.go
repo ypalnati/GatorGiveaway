@@ -61,6 +61,7 @@ func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine 
 	r.GET("/allPosts", v.GetPosts(db))
 	r.GET("/orders/", v.GetUserOrdersView(db))
 	r.GET("/allOrders", v.GetAllOrders(db))
+	r.POST("/placeOrder", v.PlaceOrder(db))
 	return r
 }
 
@@ -72,7 +73,7 @@ func setupDb(dbName string) *gorm.DB {
 	}
 
 	// Migrate the User & Product model to the db
-	db.AutoMigrate(&m.User{}, &m.Product{}, &m.Order{})
+	db.AutoMigrate(&m.User{}, &m.Product{}, &m.Post{}, &m.Order{})
 
 	return db
 }
