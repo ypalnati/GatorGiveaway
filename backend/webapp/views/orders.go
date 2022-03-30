@@ -139,22 +139,22 @@ func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
  */
 
 func CancelOrderView(db *gorm.DB) gin.HandlerFunc {
-	fmt.Println("hello")
+
 	fn := func(c *gin.Context) {
 		// Get sessions
-		// session := sessions.Default(c)
-
-		// // Get user id from session
-		// v := session.Get("uId")
-
-		// // if there's no user id, return 400
-		// if v == nil {
-		// 	c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
-		// 	return
-		// }
+		session := sessions.Default(c)
 
 		// Get user id from session
-		uid := 1
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		// Get user id from session
+		uid := v.(uint)
 		//take order id from params
 		orderId, _ := strconv.Atoi(c.Param("orderId"))
 
