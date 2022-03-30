@@ -79,3 +79,51 @@ func GetAllOrders(db *gorm.DB) gin.HandlerFunc {
 	// return the GetPosts
 	return gin.HandlerFunc(fn)
 }
+
+/*
+ * Register User Order
+ * Validate the user login
+ * Validate the Order Structure
+ * Write to DB
+ * Return the status and Order ID accordingly
+ */
+
+func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+
+		// validate user session
+		session := sessions.Default(c)
+		v := session.Get("uId")
+		if v == nil {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"result": "User not logged in",
+			})
+			return
+		}
+
+		// validate the json
+		var json m.Order
+		if err := c.ShouldBindJSON(&json); err != nil {
+			// return bad request if field names are wrong and if fields are missing
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		// create object in database
+		result := db.Create(&json)
+
+		// return error if creating object in db failed
+		if result.Error != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
+			return
+		}
+
+		// return 200 status
+		// along with Order Id
+		c.JSON(http.StatusOK, gin.H{
+			"orderId": json.ID,
+			"result":  "order successfully placed!",
+		})
+	}
+	return gin.HandlerFunc(fn)
+}

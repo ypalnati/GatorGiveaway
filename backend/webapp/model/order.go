@@ -11,13 +11,13 @@ const (
 )
 
 type Post struct {
-	Count     uint `json:"-"`
-	ProductId uint `json:"-"`
+	Count     uint `json:"count"`
+	ProductId uint `json:"productId"`
 }
 
 type Order struct {
 	gorm.Model
 	UserId uint   `json:"-"`
-	Post   []Post `json:"post"`
+	Posts  []Post `json:"posts" gorm:"foreignKey:ProductId;references:ID"`
 	Status OrderStatus
 }
