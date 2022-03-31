@@ -109,6 +109,9 @@ func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
+		// set the status
+		json.Status = m.CONFIRMED
+
 		// create object in database
 		result := db.Create(&json)
 
