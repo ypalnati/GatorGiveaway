@@ -22,6 +22,14 @@ import (
 func LoginView(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
 		session := sessions.Default(c)
+		v := session.Get("uId")
+		if v != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"result": "User Already Logged In",
+			})
+			return
+		}
+
 		var json m.Login
 		// try to bind the request json to the Login struct
 		if err := c.ShouldBindJSON(&json); err != nil {
