@@ -130,3 +130,48 @@ func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
 	}
 	return gin.HandlerFunc(fn)
 }
+
+/*
+ * Cancel User Order
+ * Validate the user login
+ * Write to DB , order status as cancelled
+ * Return the status and Order ID accordingly
+ */
+
+func CancelOrderView(db *gorm.DB) gin.HandlerFunc {
+	fmt.Println("hello")
+	fn := func(c *gin.Context) {
+		// Get sessions
+		// session := sessions.Default(c)
+
+		// // Get user id from session
+		// v := session.Get("uId")
+
+		// // if there's no user id, return 400
+		// if v == nil {
+		// 	c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+		// 	return
+		// }
+
+		// Get user id from session
+		uid := 1
+		//take order id from params
+		orderId, _ := strconv.Atoi(c.Param("orderId"))
+
+		var updated_order m.Order
+		db.First(&updated_order, orderId)
+
+		updated_order.Status = 2
+
+		// get the existing post
+		var op m.Product
+		db.Find(&op, "id = ? AND user_id = ?", orderId, uid)
+
+		db.Model(&op).Updates(updated_order)
+
+		c.JSON(http.StatusOK, op)
+	}
+
+	// return the loginHandlerfunction
+	return gin.HandlerFunc(fn)
+}
