@@ -13,6 +13,9 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 import InputAdornment from '@mui/material/InputAdornment';
 import SendIcon from '@mui/icons-material/Send';
 import Grid from '@mui/material/Grid';
@@ -52,7 +55,7 @@ const boxStyle = {
   boxShadow: 24,
   p: 4,
 };
-
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const Home = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState()
@@ -104,8 +107,33 @@ const Home = () => {
         }
       )
   }
-  const callEditApi = (e) => {
-    e.preventDefault();
+
+  const changeFavIcon = (c) => {
+     console.log(c.isFav)
+     var f = !c.isFav
+     console.log(f)
+    fetch('http://localhost:8080/update/' + JSON.stringify(c.ID), {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        isFav : f
+      })
+    })
+      .then(
+       (r)=>{
+         console.log(r);
+         window.location.reload(true)
+       }
+      )
+  }
+  const callEditApi = (c) => {
+   
+  
+    /* e.preventDefault();
     console.log(e.target.elements);
     fetch('http://localhost:8080/update/' + selectedPost, {
       method: 'PATCH',
@@ -133,7 +161,7 @@ const Home = () => {
         (r) => {
           console.log(r)
         }
-      )
+      )*/
   }
 
   const callCreateApi = (e) => {
@@ -238,6 +266,7 @@ const Home = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
+                  <Checkbox {...label} checked={c.isFav} onChange={() => changeFavIcon(c)} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   <EditIcon onClick={() => callEditApi(c.ID)} color="success" position="right"></EditIcon>
                   <DeleteIcon onClick={() => callDeleteApi(c.ID)} sx={{ color: red[800] }} position="right"></DeleteIcon>
                 </CardActions>
