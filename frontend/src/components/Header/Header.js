@@ -6,6 +6,8 @@ const headersData = [
     {
       label: "About",
       href: "/aboutus",
+      favLabel: "Favorites",
+      favLink: "/favorites"
     },            
   ];
 
@@ -24,9 +26,19 @@ function Header() {
         </Toolbar>;
       };    
     const getMenuButtons = () => {
-        return headersData.map(({ label, href }) => {
+        return headersData.map(({ label, href, favLabel, favLink }) => {
           return (
             <>
+               <Button
+              {...{
+                key: favLabel,
+                color: "inherit",
+                to: favLink,
+                component: RouterLink,
+              }}
+            >
+              {favLabel}
+            </Button>
                 <Button
               {...{
                 key: label,
