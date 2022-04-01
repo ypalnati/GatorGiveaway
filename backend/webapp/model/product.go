@@ -13,7 +13,7 @@ type Product struct {
 	Weight      int    `form:"weight" json:"weight"`
 	Age         int    `form:"age" json:"age"`
 	Count       int    `form:"count" json:"count"`
-	IsFav 		bool 	`form:"isFav" json:"isFav"`
+	IsFav 		*bool 	`form:"isFav" json:"isFav"`
 	//expected to have url of the image when uploaded to server
 	ImageUrl	string  `json:"imageUrl"`
 	
