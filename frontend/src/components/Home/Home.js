@@ -232,6 +232,10 @@ const Home = () => {
                   <Typography variant="body2" color="text.secondary">
                     Count: {c.count}
                   </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    
+                    IsFav: {JSON.stringify(c.isFav)}
+                  </Typography>
                 </CardContent>
                 <CardActions>
                   <EditIcon onClick={() => callEditApi(c.ID)} color="success" position="right"></EditIcon>
