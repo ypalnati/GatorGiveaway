@@ -124,7 +124,8 @@ func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-
+		// set user id
+		json.UserId = v.(uint)
 		// set the status
 		json.Status = m.CONFIRMED
 
