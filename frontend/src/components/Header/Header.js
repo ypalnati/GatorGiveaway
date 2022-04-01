@@ -77,7 +77,7 @@ function Header() {
     // To-Do: toggle this
     let isLoggedIn = true;
     return (
-        <header>
+        <header className='header'>
             <AppBar sx={{backgroundColor: "#bc581a"}}>{displayDesktop()} </AppBar>
         </header>
         
