@@ -1,6 +1,7 @@
 import {Link as RouterLink} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import {AppBar, Toolbar, Typography, Avatar, Button} from '@mui/material'
+import {AppBar, Toolbar, Typography, Avatar, Button, IconButton} from '@mui/material'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const headersData = [    
     {
@@ -29,6 +30,12 @@ function Header() {
         return headersData.map(({ label, href, favLabel, favLink }) => {
           return (
             <>
+              	<a href="/cart" sx={{component:RouterLink}}>
+	                <IconButton sx={{color: '#e3f2fd'}} aria-label="add to shopping cart" >
+	                  <ShoppingCartIcon />
+	                </IconButton>
+	              </a>
+
                <Button
               {...{
                 key: favLabel,

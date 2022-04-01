@@ -17,6 +17,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import InputAdornment from '@mui/material/InputAdornment';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SendIcon from '@mui/icons-material/Send';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -60,7 +61,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState()
   const [selectedPost, setSelectedPost] = useState()
-
+  const [itemCount, setItemCount] = useState(0);	
   const [selectedFile, setSelectedFile] = useState(null);
 
   const [open, setOpen] = React.useState(false);
@@ -106,6 +107,9 @@ const Home = () => {
           console.log(r)
         }
       )
+  }
+  const addItemToCart = (i) => {
+	
   }
 
   const changeFavIcon = (c) => {
@@ -265,6 +269,11 @@ const Home = () => {
                     IsFav: {JSON.stringify(c.isFav)}
                   </Typography>
                 </CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', pl: 7}}>
+	                  <Button variant="contained" startIcon={<ShoppingCartIcon />} onClick={() => addItemToCart(i)}>
+	                    Add to Cart
+	                  </Button>
+                </Box>
                 <CardActions>
                   <Checkbox {...label} checked={c.isFav} onChange={() => changeFavIcon(c)} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
                   <EditIcon onClick={() => callEditApi(c.ID)} color="success" position="right"></EditIcon>
