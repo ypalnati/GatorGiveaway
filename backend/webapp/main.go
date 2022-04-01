@@ -28,13 +28,14 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine {
 	// setting up the webserver with default config
-	r := gin.Default()
+    //r := gin.Default()
+	r := gin.New()
 
 	// Check every request if allowed for CORS
 	r.Use(CORSMiddleware())
 
 	// Adding logger to the middleware
-	r.Use(gin.Logger())
+	//r.Use(gin.Logger())
 
 	// Using default recovery mechanism in case of any unexpected crashes in webserver
 	r.Use(gin.Recovery())

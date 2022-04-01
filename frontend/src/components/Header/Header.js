@@ -1,11 +1,14 @@
 import {Link as RouterLink} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import {AppBar, Toolbar, Typography, Avatar, Button} from '@mui/material'
+import {AppBar, Toolbar, Typography, Avatar, Button, IconButton} from '@mui/material'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const headersData = [    
     {
       label: "About",
       href: "/aboutus",
+      favLabel: "Favorites",
+      favLink: "/favorites"
     },            
   ];
 
@@ -24,9 +27,25 @@ function Header() {
         </Toolbar>;
       };    
     const getMenuButtons = () => {
-        return headersData.map(({ label, href }) => {
+        return headersData.map(({ label, href, favLabel, favLink }) => {
           return (
             <>
+              	<a href="/cart" sx={{component:RouterLink}}>
+	                <IconButton sx={{color: '#e3f2fd'}} aria-label="add to shopping cart" >
+	                  <ShoppingCartIcon />
+	                </IconButton>
+	              </a>
+
+               <Button
+              {...{
+                key: favLabel,
+                color: "inherit",
+                to: favLink,
+                component: RouterLink,
+              }}
+            >
+              {favLabel}
+            </Button>
                 <Button
               {...{
                 key: label,
@@ -65,7 +84,7 @@ function Header() {
     // To-Do: toggle this
     let isLoggedIn = true;
     return (
-        <header>
+        <header className='header'>
             <AppBar sx={{backgroundColor: "#bc581a"}}>{displayDesktop()} </AppBar>
         </header>
         
