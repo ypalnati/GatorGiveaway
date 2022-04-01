@@ -113,13 +113,18 @@ func GetParticularOrder(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		// Get user id from session
-		uid := v.(uint)
+		//uid := v.(uint)
 		//take order id from params
 		orderId, _ := strconv.Atoi(c.Param("orderId"))
 
 		// fetch orders based on user_id
 		var order m.Order
-		db.Find(&order, "user_id = ? AND order_id = ?", uid, orderId)
+		db.Find(&order, orderId)
+
+		if order.ID != (uint(orderId)) {
+			c.JSON(http.StatusConflict, gin.H{"error": "Order Id doesnt exists!"})
+			return
+		}
 
 		var posts []m.Post
 		db.Find(&posts, "order_id = ?", orderId)
