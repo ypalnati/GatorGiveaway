@@ -9,6 +9,7 @@ import Login  from './components/Login/Login'
 import Footer from './components/Footer/Footer'
 import AboutUs from './components/AboutUs/AboutUs'
 import ContactUs from './components/ContactUs/ContactUs'
+import Favorite from './components/Favorites/Favorites'
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
               <Route path="/register" exact element={<Register />} /> 
               <Route path="/aboutus" exact element={<AboutUs />} /> 
               <Route path="/contactus" exact element={<ContactUs />} />
+              <Route path="/favorites" exact element={<Favorite />} />
             </Routes>          
           </div>           
         <Footer/>
