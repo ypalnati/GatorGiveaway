@@ -41,6 +41,14 @@ func GetUserOrdersView(db *gorm.DB) gin.HandlerFunc {
 		var orders []m.Order
 		db.Find(&orders, "user_id = ?", uid)
 
+		for i := 0; i < len(orders); i++ {
+			var posts []m.Post
+			db.Find(&posts, "order_id = ?", orders[i].ID)
+
+			orders[i].Posts = posts
+
+		}
+
 		// return the fetched orders
 		c.JSON(http.StatusOK, orders)
 	}
@@ -63,6 +71,14 @@ func GetAllOrders(db *gorm.DB) gin.HandlerFunc {
 		// fetch all orders
 		var orders []m.Order
 		db.Model(&m.Order{}).Limit(Limit).Offset((pageNumber - 1) * Limit).Find(&orders)
+
+		for i := 0; i < len(orders); i++ {
+			var posts []m.Post
+			db.Find(&posts, "order_id = ?", orders[i].ID)
+
+			orders[i].Posts = posts
+
+		}
 
 		// get total records
 		var count int64
@@ -108,7 +124,8 @@ func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-
+		// set user id
+		json.UserId = v.(uint)
 		// set the status
 		json.Status = m.CONFIRMED
 
@@ -139,22 +156,22 @@ func PlaceOrder(db *gorm.DB) gin.HandlerFunc {
  */
 
 func CancelOrderView(db *gorm.DB) gin.HandlerFunc {
-	fmt.Println("hello")
+
 	fn := func(c *gin.Context) {
 		// Get sessions
-		// session := sessions.Default(c)
-
-		// // Get user id from session
-		// v := session.Get("uId")
-
-		// // if there's no user id, return 400
-		// if v == nil {
-		// 	c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
-		// 	return
-		// }
+		session := sessions.Default(c)
 
 		// Get user id from session
-		uid := 1
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		// Get user id from session
+		uid := v.(uint)
 		//take order id from params
 		orderId, _ := strconv.Atoi(c.Param("orderId"))
 
