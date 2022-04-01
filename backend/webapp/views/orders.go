@@ -41,6 +41,14 @@ func GetUserOrdersView(db *gorm.DB) gin.HandlerFunc {
 		var orders []m.Order
 		db.Find(&orders, "user_id = ?", uid)
 
+		for i := 0; i < len(orders); i++ {
+			var posts []m.Post
+			db.Find(&posts, "order_id = ?", orders[i].ID)
+
+			orders[i].Posts = posts
+
+		}
+
 		// return the fetched orders
 		c.JSON(http.StatusOK, orders)
 	}
@@ -63,6 +71,14 @@ func GetAllOrders(db *gorm.DB) gin.HandlerFunc {
 		// fetch all orders
 		var orders []m.Order
 		db.Model(&m.Order{}).Limit(Limit).Offset((pageNumber - 1) * Limit).Find(&orders)
+
+		for i := 0; i < len(orders); i++ {
+			var posts []m.Post
+			db.Find(&posts, "order_id = ?", orders[i].ID)
+
+			orders[i].Posts = posts
+
+		}
 
 		// get total records
 		var count int64
