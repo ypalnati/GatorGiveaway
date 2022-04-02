@@ -317,3 +317,51 @@ Example
 ![GetOrdersByUser](https://user-images.githubusercontent.com/22216660/161361160-af859ae2-e114-4ad4-ad9e-b63bcd14fca2.gif)
 
 </details>
+
+## Unit Tests Backend Summary
+
+<details>
+  <summary>Place Order API Tests</summary>
+<hr>
+
+- TestPlaceOrderPassCase
+	- Tested the /placeOrder API by logging in with a user and placing an order using posts he could see
+- TestPlaceOrderNotLoggedInFailCase
+	- Tested the /placeOrder API NOT logging in with user, this return status of UNAUTHORIZED
+- TestPlaceOrderJsonFieldsMissing
+	- Json Fileds missing is handled in this test
+	
+<hr>
+
+</details>
+<details>
+  <summary>Cancel Order API Tests</summary>
+<hr>
+
+- TestCancelOrderSuccessCase
+	- Tested the /cancelOrder API by logging in with a user and cancelling the user order by order id, STATUS is updated to 2
+- TestCancelOrderUserNotLoggedInCase
+	- Tested the /cancelOrder API NOT logging in with user, this return status of UNAUTHORIZED
+- TestCancelOrderOrderNotExistsCase
+	- Order Id not existing in this case is handled, with a positive response and message in json response.
+	
+<hr>
+
+</details>
+<details>
+  <summary>List Orders API Tests</summary>
+<hr>
+
+- TestGetAllOrdersPassCase
+	- Lists all orders by calling the /alOrders, it returns in a pagination format
+- TestGetParticularOrderPassCase
+	- List Order based on the Order ID, return a single json
+- TestGetParticularOrderFailCase
+	- Provided order ID if it's not present, returns a 409 status and validated the same.
+	
+<hr>
+
+</details>
+
+#### GIF for unit tests backend
+![unitTestBackend](https://user-images.githubusercontent.com/22216660/161362524-da9e074f-5867-48fb-b75c-95748875632d.gif)
