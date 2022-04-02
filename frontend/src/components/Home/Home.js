@@ -45,6 +45,15 @@ const style = {
   position: 'fixed',
 }; 
 
+const cartStyle = {
+  margin: 0,
+  top: 'auto',
+  right: 30,
+  bottom: 150,
+  left: 'auto',
+  position: 'fixed',
+};
+
 const boxStyle = {
   position: 'absolute',
   top: '50%',
@@ -63,10 +72,13 @@ const Home = () => {
   const [selectedPost, setSelectedPost] = useState()
   const [itemCount, setItemCount] = useState(0);	
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const [cartItems, setCartItems] = useState([])
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [openCart, setOpenCart] = React.useState(false);
+  const handleCartOpen = () => setOpenCart(true);
+  const handleCartClose = () => setOpenCart(false);
   const handleFileInput = (e) => {
       setSelectedFile(e.target.files[0]);
     }
@@ -108,8 +120,44 @@ const Home = () => {
         }
       )
   }
-  const addItemToCart = (i) => {
+  const addItemToCart = (item) => {
+    let cartItemsArray = [...cartItems]
+    cartItemsArray.push(item);
+    console.log(cartItemsArray)
+    setCartItems(cartItemsArray)
 	
+  }
+
+  const placeOrder = (c) => {
+    let itemBody = {}
+    itemBody["posts"] = []
+    {posts != null ? posts.map(function (c, i) {
+                return ( 
+        itemBody["posts"].append({"productId":c.ID, "count": c.count})
+      )
+    }) : <></>} 
+    c.preventDefault();
+    fetch('http://localhost:8080/placeOrder', {
+      method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          itemBody
+        })
+    })
+    .then(
+      (r) => {
+        console.log(r)
+        if (r.status === 200)
+          window.location.reload(false);
+      },
+      (r) => {
+        console.log(r)
+      }
+    )
   }
 
   const changeFavIcon = (c) => {
@@ -223,17 +271,24 @@ const Home = () => {
       })
   }, [])
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 2 }}>
       <div class="d-flex flex-row-reverse bd-highlight">
-        <div class="p-2 bd-highlight">
+        <div class="p-2  bd-highlight">
           <form className="form-inline" onSubmit={callCreateApi}>
             <Fab style={style} onClick={handleOpen} color="primary" aria-label="add">
               <AddIcon />
             </Fab>
-          </form>
+          </form>          
+        </div>
+        <div>
+          <form className="form-inline" onSubmit={placeOrder}>
+            <Fab style={cartStyle} onClick={handleCartOpen} color="primary" aria-label="add">
+              <ShoppingCartIcon />
+            </Fab>
+          </form>          
         </div>
       </div>
-      
+                 
       <Grid container spacing={1}>
         {posts != null ? posts.map(function (c, i) {
           return (
@@ -270,7 +325,7 @@ const Home = () => {
                   </Typography>
                 </CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 7}}>
-	                  <Button variant="contained" startIcon={<ShoppingCartIcon />} onClick={() => addItemToCart(i)}>
+	                  <Button variant="contained" startIcon={<ShoppingCartIcon />} onClick={() => addItemToCart(c)}>
 	                    Add to Cart
 	                  </Button>
                 </Box>
@@ -333,6 +388,39 @@ const Home = () => {
               </Button>
             </form>
           </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openCart}
+        onClose={handleCartClose}
+        aria-labelledby="add-item-to-cart"
+        aria-describedby="takes-user-input-to-add-item-to-cart"
+      >
+        <Box sx={boxStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Cart Items
+          </Typography>
+          {cartItems != null ? cartItems.map(function (c, i) {
+            return (
+              <Box>
+                <form onSubmit={placeOrder}>
+                  <Card sx={{ maxWidth: 345 }}>                  
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Count: {c.count} * Item: {c.name}
+                      </Typography>
+                    </CardContent>
+                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 7}}>
+	                    <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+	                      Place Order
+	                    </Button>
+                    </Box>                
+                  </Card>                  
+                </form>
+              </Box>)
+            }) : <></>}
+          
         </Box>
       </Modal>
 
