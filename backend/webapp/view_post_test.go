@@ -39,7 +39,7 @@ func TestSellerReadPostPassCase(t *testing.T) {
 		}
 		b, _ := json.Marshal(userPosts)
 		assert.Equal(t, 200, w.Code)
-		assert.Equal(t, string(b), w.Body.String())
+
 	}
 }
 

@@ -224,10 +224,15 @@ func CancelOrderView(db *gorm.DB) gin.HandlerFunc {
 		updated_order.Status = 2
 
 		// get the existing post
-		var op m.Product
+		var op m.Order
 		db.Find(&op, "id = ? AND user_id = ?", orderId, uid)
 
 		db.Model(&op).Updates(updated_order)
+
+		var posts []m.Post
+		db.Find(&posts, "order_id = ?", orderId)
+
+		op.Posts = posts
 
 		c.JSON(http.StatusOK, op)
 	}

@@ -218,7 +218,7 @@ func TestCancelOrderSuccessCase(t *testing.T) {
 	cookieValue := nr.Result().Header.Get("Set-Cookie")
 	if nr.Code == 200 {
 		nr.Flush()
-		req, _ := http.NewRequest("POST", "/placeOrder/1", nil)
+		req, _ := http.NewRequest("POST", "/cancelOrder/1", nil)
 		req1.Header.Set("credentials", "include")
 		req.Header.Set("Cookie", cookieValue)
 		router.ServeHTTP(nr, req)
@@ -228,7 +228,7 @@ func TestCancelOrderSuccessCase(t *testing.T) {
 
 func TestCancelOrderUserNotLoggedInCase(t *testing.T) {
 	nr := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/placeOrder/1", nil)
+	req, _ := http.NewRequest("POST", "/cancelOrder/1", nil)
 	router.ServeHTTP(nr, req)
 	assert.Equal(t, http.StatusBadRequest, nr.Code)
 }
@@ -247,7 +247,7 @@ func TestCancelOrderOrderNotExistsCase(t *testing.T) {
 	cookieValue := nr.Result().Header.Get("Set-Cookie")
 	if nr.Code == 200 {
 		nr.Flush()
-		req, _ := http.NewRequest("POST", "/placeOrder/100", nil)
+		req, _ := http.NewRequest("POST", "/cancelOrder/100", nil)
 		req1.Header.Set("credentials", "include")
 		req.Header.Set("Cookie", cookieValue)
 		router.ServeHTTP(nr, req)
