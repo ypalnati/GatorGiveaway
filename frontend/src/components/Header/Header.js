@@ -30,7 +30,7 @@ function Header() {
         return headersData.map(({ label, href, favLabel, favLink }) => {
           return (
             <>
-              	<a href="/cart" sx={{component:RouterLink}}>
+              	<a href="/orders" sx={{component:RouterLink}}>
 	                <IconButton sx={{color: '#e3f2fd'}} aria-label="add to shopping cart" >
 	                  <ShoppingCartIcon />
 	                </IconButton>

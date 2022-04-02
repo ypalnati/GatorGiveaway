@@ -10,7 +10,7 @@ import Footer from './components/Footer/Footer'
 import AboutUs from './components/AboutUs/AboutUs'
 import ContactUs from './components/ContactUs/ContactUs'
 import Favorite from './components/Favorites/Favorites'
-import Cart from './components/Cart/Cart'
+import Orders from './components/Orders/Orders'
 
 const App = () => {
 
@@ -27,7 +27,7 @@ const App = () => {
               <Route path="/aboutus" exact element={<AboutUs />} />               
               <Route path="/contactus" exact element={<ContactUs />} />
               <Route path="/favorites" exact element={<Favorite />} />
-              <Route path="/cart" exact element={<Cart/>} />
+              <Route path="/orders" exact element={<Orders />} />
             </Routes>          
           </div>           
         <Footer/>
