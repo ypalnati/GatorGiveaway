@@ -8,7 +8,9 @@ const headersData = [
       label: "About",
       href: "/aboutus",
       favLabel: "Favorites",
-      favLink: "/favorites"
+      favLink: "/favorites",
+      ordersLabel: "Orders",
+      ordersLink: "/orders"
     },            
   ];
 
@@ -27,14 +29,19 @@ function Header() {
         </Toolbar>;
       };    
     const getMenuButtons = () => {
-        return headersData.map(({ label, href, favLabel, favLink }) => {
+        return headersData.map(({ordersLabel, ordersLink, label, href, favLabel, favLink }) => {
           return (
             <>
-              	<a href="/orders" sx={{component:RouterLink}}>
-	                <IconButton sx={{color: '#e3f2fd'}} aria-label="add to shopping cart" >
-	                  <ShoppingCartIcon />
-	                </IconButton>
-	              </a>
+              	<Button
+              {...{
+                key: ordersLabel,
+                color: "inherit",
+                to: ordersLink,
+                component: RouterLink,
+              }}
+            >
+              {ordersLabel}
+            </Button>
 
                <Button
               {...{
