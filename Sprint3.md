@@ -87,6 +87,9 @@ Example
 
 `Code: 200 OK`
  
+#### GIF
+![placeOrder](https://user-images.githubusercontent.com/22216660/161361061-93ce1cb2-5fe8-4563-a9a9-005445585be7.gif)
+
 
 </details>
 <details>
@@ -164,6 +167,9 @@ Example
 
 `Code: 200 OK`
  
+#### GIF
+![GetAllOrders](https://user-images.githubusercontent.com/22216660/161361088-d3c39376-73de-4478-8374-0e7edb24228b.gif)
+
 
 </details>
 <details>
@@ -208,6 +214,9 @@ Example
 
 `Code: 200 OK`
  
+#### GIF
+![GetOrderByOrderId](https://user-images.githubusercontent.com/22216660/161361113-5775d004-92b1-469c-aa9c-b953e1cfc2bd.gif)
+
 
 </details>
 <details>
@@ -254,6 +263,10 @@ Example
 
 `Code: 200 OK`
  
+#### GIF
+![CancelOrder](https://user-images.githubusercontent.com/22216660/161361146-f68eb327-540d-44b1-aeb8-8c8176b5a4f3.gif)
+
+
 
 </details>
 <details>
@@ -299,5 +312,8 @@ Message format: json
 Example
 
 `Code: 200 OK`
- 
+	
+#### GIF
+![GetOrdersByUser](https://user-images.githubusercontent.com/22216660/161361160-af859ae2-e114-4ad4-ad9e-b63bcd14fca2.gif)
+
 </details>
