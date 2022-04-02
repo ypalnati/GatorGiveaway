@@ -29,6 +29,13 @@
 
 [Front end Full Integration Demo](https://www.youtube.com/watch?v=vA0G7OwYMA0)
 
+## Useful links of the project
+- [Gator Gibeaway Repo Link](https://github.com/raghusaripalli/GatorGiveaway) 
+- [Discussions link on git](https://github.com/raghusaripalli/GatorGiveaway/discussions)
+- [Actions link on git](https://github.com/raghusaripalli/GatorGiveaway/actions)
+- [Sprint 3 User stories progress board link](https://github.com/raghusaripalli/GatorGiveaway/projects/3)
+- [All user stories link](https://github.com/raghusaripalli/GatorGiveaway/issues)
+
 ### Api documentation of backend services
 <details>
   <summary>Place Order</summary>
