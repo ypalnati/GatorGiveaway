@@ -261,11 +261,11 @@ const Home = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Checkbox {...label} checked={c.isFav} onChange={() => changeFavIcon(c)} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                  <Checkbox {...label} checked={c.isFav} onChange={() => changeFavIcon(c)} icon={<FavoriteBorder />} checkedIcon={<Favorite style={{color: '#E1306C'}} />} />
                   <EditIcon onClick={() => callEditApi(c.ID)} color="success" position="right"></EditIcon>
                   <DeleteIcon onClick={() => callDeleteApi(c.ID)} sx={{ color: red[800] }} position="right"></DeleteIcon>
                 </CardActions>
-              </Card>)
+              </Card>
           </Grid>)
         }) : <></>}
       </Grid>
