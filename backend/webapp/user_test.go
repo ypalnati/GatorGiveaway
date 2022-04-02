@@ -20,6 +20,7 @@ var storeName string = "testsecret"
 var sessionName string = "testsession"
 var users []m.User
 var posts []m.Product
+var orders []m.Order
 var router *gin.Engine
 
 func setupTestDb(dbName string) *gorm.DB {
@@ -140,6 +141,28 @@ func initData(db *gorm.DB) {
 		},
 	}
 	db.Create(&posts)
+
+	orders = []m.Order{
+
+		{
+			Posts: []m.Post{
+				{
+					Count:     2,
+					ProductId: 1,
+				},
+			},
+		},
+
+		{
+			Posts: []m.Post{
+				{
+					Count:     1,
+					ProductId: 2,
+				},
+			},
+		},
+	}
+	db.Create(&orders)
 }
 
 func TestMain(m *testing.M) {

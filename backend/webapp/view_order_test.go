@@ -12,6 +12,110 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestGetAllOrdersPassCase(t *testing.T) {
+
+	login := m.Login{
+
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+
+	payload, _ := json.Marshal(login)
+
+	nr := httptest.NewRecorder()
+
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+
+	req1.Header.Set("Content-Type", "application/json")
+
+	req1.Header.Set("credentials", "include")
+
+	router.ServeHTTP(nr, req1)
+
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+
+	if nr.Code == 200 {
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("GET", "/allOrders", nil)
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(w, req)
+		assert.Equal(t, 200, w.Code)
+
+	}
+
+}
+
+func TestGetParticularOrderPassCase(t *testing.T) {
+
+	login := m.Login{
+
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+
+	payload, _ := json.Marshal(login)
+
+	nr := httptest.NewRecorder()
+
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+
+	req1.Header.Set("Content-Type", "application/json")
+
+	req1.Header.Set("credentials", "include")
+
+	router.ServeHTTP(nr, req1)
+
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+
+	if nr.Code == 200 {
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("GET", "/order/1", nil)
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(w, req)
+		assert.Equal(t, 200, w.Code)
+
+	}
+
+}
+
+func TestGetParticularOrderFailCase(t *testing.T) {
+
+	login := m.Login{
+
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+
+	payload, _ := json.Marshal(login)
+
+	nr := httptest.NewRecorder()
+
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+
+	req1.Header.Set("Content-Type", "application/json")
+
+	req1.Header.Set("credentials", "include")
+
+	router.ServeHTTP(nr, req1)
+
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+
+	if nr.Code == 200 {
+
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest("GET", "/order/11", nil)
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(w, req)
+		assert.Equal(t, 409, w.Code)
+
+	}
+
+}
 func TestPlaceOrderPassCase(t *testing.T) {
 	login := m.Login{
 		Username: "testadmin",
