@@ -88,7 +88,7 @@ const Home = () => {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Accept': '*/*'
+        'Accept': '/'
       }
     })
       .then(
@@ -107,7 +107,7 @@ const Home = () => {
       method: 'DELETE',
       credentials: 'include',
       headers: {
-        'Accept': '*/*'
+        'Accept': '/'
       }
     })
       .then(
@@ -129,14 +129,19 @@ const Home = () => {
   }
 
   const placeOrder = (c) => {
-    let itemBody = {}
-    itemBody["posts"] = []
-    {posts != null ? posts.map(function (c, i) {
-                return ( 
-        itemBody["posts"].append({"productId":c.ID, "count": c.count})
-      )
-    }) : <></>} 
     c.preventDefault();
+    let posts = []
+    if (cartItems.length > 0)
+    {
+      cartItems.map(function (c, i) {
+        posts.push({"productId":c.ID, "count": c.count})
+    })
+    }
+
+    console.log(JSON.stringify({
+      posts
+    }))
+    
     fetch('http://localhost:8080/placeOrder', {
       method: 'POST',
         credentials: 'include',
@@ -145,7 +150,7 @@ const Home = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          itemBody
+          posts
         })
     })
     .then(
@@ -258,7 +263,7 @@ const Home = () => {
       method: 'GET',
       credentials: 'include',
       headers: {
-        'Accept': '*/*'
+        'Accept': '/'
       }
     })
       .then(response => {
@@ -399,27 +404,35 @@ const Home = () => {
       >
         <Box sx={boxStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Cart Items
+            Cart
           </Typography>
-          {cartItems != null ? cartItems.map(function (c, i) {
-            return (
+          
               <Box>
+              
                 <form onSubmit={placeOrder}>
-                  <Card sx={{ maxWidth: 345 }}>                  
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Count: {c.count} * Item: {c.name}
-                      </Typography>
-                    </CardContent>
-                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 7}}>
+                <ul>
+                {cartItems != null && cartItems.length > 0 ? cartItems.map(function (c, i) {
+   return (
+     <div>
+
+     <CardMedia style={{display: 'inline-block'}}
+                  component="img"
+                  alt="green iguana"
+                  height="140"
+                  image={c.imageUrl}
+                />
+        <Typography style={{display: 'inline-block'}}>{c.count} X {c.name}</Typography>
+        </div>
+    )
+            }) : <div>Your Cart is Empty</div>}
+            </ul>
+                  <Box sx={{ display: 'flex', alignItems: 'center', pl: 7}}>
 	                    <Button type="submit" variant="contained" endIcon={<SendIcon />}>
 	                      Place Order
 	                    </Button>
-                    </Box>                
-                  </Card>                  
+                  </Box>              
                 </form>
-              </Box>)
-            }) : <></>}
+              </Box>
           
         </Box>
       </Modal>
