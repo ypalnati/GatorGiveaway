@@ -40,9 +40,10 @@ func PostCreateView(db *gorm.DB) gin.HandlerFunc {
 		json.Description = p.Sanitize(json.Description)
 		json.Location = p.Sanitize(json.Location)
 		json.Dimensions = p.Sanitize(json.Dimensions)
+		json.Tags = p.Sanitize(json.Tags)
 		json.ImageUrl = p.Sanitize(json.ImageUrl)
 		json.UserId = user.ID
-
+		json.Tags = removeTagDuplicates(json.Tags)
 		// create the post
 		result := db.Create(&json)
 
