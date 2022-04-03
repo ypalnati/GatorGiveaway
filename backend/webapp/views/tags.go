@@ -9,7 +9,15 @@ func splitTagStringByHash(tags string) []string {
 
 // remove duplicate tags
 func removeDuplicateTags(tagList []string) string {
-	return strings.Join(tagList, "#")
+	allKeys := make(map[string]bool)
+	list := []string{}
+	for _, item := range tagList {
+		if _, value := allKeys[item]; !value {
+			allKeys[item] = true
+			list = append(list, item)
+		}
+	}
+	return strings.Join(list, "#")
 }
 
 // remove duplicates from tags
