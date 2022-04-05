@@ -65,6 +65,8 @@ func SetupRouter(db *gorm.DB, storeName string, sessionName string) *gin.Engine 
 	r.GET("/allOrders", v.GetAllOrders(db))
 	r.POST("/placeOrder", v.PlaceOrder(db))
 	r.POST("/cancelOrder/:orderId", v.CancelOrderView(db))
+
+	r.GET("/allTags", v.GetAllTags(db))
 	return r
 }
 
