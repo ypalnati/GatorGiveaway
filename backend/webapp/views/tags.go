@@ -2,7 +2,7 @@ package views
 
 import (
 	"net/http"
-
+	"strconv"
 	m "webapp/model"
 
 	"github.com/gin-gonic/gin"
@@ -26,8 +26,11 @@ func removeDuplicates(tagList []string) []string {
 	list := []string{}
 	for _, item := range tagList {
 		if _, value := allKeys[item]; !value {
-			allKeys[item] = true
-			list = append(list, item)
+			if len(item) != 0 {
+				allKeys[item] = true
+				list = append(list, item)
+			}
+
 		}
 	}
 	return list
@@ -44,6 +47,26 @@ func GetAllTags(db *gorm.DB) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
 		var products []m.Product
 		db.Find(&products)
+		var tags []string
+
+		for i := 0; i < len(products); i++ {
+			var t = products[i].Tags
+			var temp = splitTagStringByHash(t)
+			tags = append(tags, temp...)
+		}
+		tags = removeDuplicates(tags)
+		c.JSON(http.StatusOK, tags)
+	}
+	return gin.HandlerFunc(fn)
+}
+
+func GetTagsOfParticularPost(db *gorm.DB) gin.HandlerFunc {
+	fn := func(c *gin.Context) {
+		var products []m.Product
+
+		productId, _ := strconv.Atoi(c.Param("productId"))
+
+		db.Find(&products, productId)
 		var tags []string
 
 		for i := 0; i < len(products); i++ {
