@@ -106,11 +106,23 @@ func GetProductsByTags(db *gorm.DB) gin.HandlerFunc {
 		var products []m.Product
 		db.Find(&products)
 
+		// return map
+		tagMap := map[string][]m.Product{}
+
 		numberOfTags := len(tagList)
 		for i := 0; i < numberOfTags; i++ {
-
+			tag := tagList[i]
+			if tag != "" {
+				var matchedProducts []m.Product
+				for _, product := range products {
+					if strings.Contains(product.Tags, tag) {
+						matchedProducts = append(matchedProducts, product)
+					}
+				}
+				tagMap[tag] = matchedProducts
+			}
 		}
-
+		c.JSON(http.StatusOK, tagMap)
 	}
 	// return the loginHandlerfunction
 	return gin.HandlerFunc(fn)
