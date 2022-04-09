@@ -41,7 +41,11 @@ func removeDuplicates(tagList []string) []string {
 func removeTagDuplicates(tags string) string {
 	tagList := splitTagStringByHash(tags)
 	var list = removeDuplicates(tagList)
-	return joinStringList(list, "#")
+	tags = joinStringList(list, "#")
+	if tags != "" {
+		tags = "#" + tags
+	}
+	return tags
 }
 
 func GetAllTags(db *gorm.DB) gin.HandlerFunc {

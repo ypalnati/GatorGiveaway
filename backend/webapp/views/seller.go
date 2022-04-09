@@ -52,9 +52,7 @@ func PostCreateView(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"result": "post creation success",
-		})
+		c.JSON(http.StatusOK, json)
 	}
 
 	// return the loginHandlerfunction
