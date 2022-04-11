@@ -52,6 +52,148 @@ func TestAddPostWithTagsPassCase(t *testing.T) {
 	}
 }
 
+func TestAddPostWithTagsPassCase2(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	tag := "#studyLamp#lamp#bulb#electricity"
+	if nr.Code == 200 {
+		post := m.Product{
+			UserId:      1,
+			Name:        "Study Lamp",
+			Description: "Study lamp which has 5 bulb slots in octopus fashion.",
+			Location:    "3800 NE hub",
+			Dimensions:  "7* 1*1",
+			Weight:      25,
+			Age:         1,
+			Count:       1,
+			Tags:        tag,
+		}
+		nr.Flush()
+		body, _ := json.Marshal(post)
+		req, _ := http.NewRequest("POST", "/create", strings.NewReader(string(body)))
+		req.Header.Set("Content-Type", "application/json")
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+		assert.Equal(t, 200, nr.Code)
+		assert.Equal(t, tag, post.Tags)
+
+	}
+}
+
+func TestGetAllPostsTagsPassCase(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	tag := "#chair#officechair#studyLamp#lamp#bulb#electricity"
+	if nr.Code == 200 {
+		post := m.Product{
+			UserId:      1,
+			Name:        "Office Chair",
+			Description: "All the wheels and functionality intact",
+			Location:    "3800 SW 34th Blvd",
+			Dimensions:  "10 x 10 x 10",
+			Weight:      110,
+			Age:         2,
+			Count:       1,
+			Tags:        tag,
+		}
+		nr.Flush()
+		body, _ := json.Marshal(post)
+		req, _ := http.NewRequest("GET", "/allTags", strings.NewReader(string(body)))
+		req.Header.Set("Content-Type", "application/json")
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+
+		assert.Equal(t, 200, nr.Code)
+		resp := nr.Body.String()
+
+		idx := strings.Index(resp, "[")
+
+		resp = string(resp[idx:])
+		resp = strings.Replace(resp, "[", "", -1)
+		resp = strings.Replace(resp, "]", "", -1)
+		resp = strings.Replace(resp, "\"", "", -1)
+		var b []string = strings.Split(resp, ",")
+		tags := strings.Join(b, "#")
+		if tags != "" {
+			tags = "#" + tags
+		}
+		assert.Equal(t, tag, tags)
+
+	}
+}
+
+func TestGetPostsTagsOfParticularPostPassCase(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	tag := "#studyLamp#lamp#bulb#electricity"
+	if nr.Code == 200 {
+		post := m.Product{
+			UserId:      1,
+			Name:        "Office Chair",
+			Description: "All the wheels and functionality intact",
+			Location:    "3800 SW 34th Blvd",
+			Dimensions:  "10 x 10 x 10",
+			Weight:      110,
+			Age:         2,
+			Count:       1,
+			Tags:        tag,
+		}
+		nr.Flush()
+		body, _ := json.Marshal(post)
+		req, _ := http.NewRequest("GET", "/tags/9", strings.NewReader(string(body)))
+		req.Header.Set("Content-Type", "application/json")
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+
+		assert.Equal(t, 200, nr.Code)
+		resp := nr.Body.String()
+
+		idx := strings.Index(resp, "[")
+
+		resp = string(resp[idx:])
+		resp = strings.Replace(resp, "[", "", -1)
+		resp = strings.Replace(resp, "]", "", -1)
+		resp = strings.Replace(resp, "\"", "", -1)
+		var b []string = strings.Split(resp, ",")
+		tags := strings.Join(b, "#")
+		if tags != "" {
+			tags = "#" + tags
+		}
+		assert.Equal(t, tag, tags)
+
+	}
+}
+
 func TestAddPostWithDuplicateTagsPassCase(t *testing.T) {
 	login := m.Login{
 		Username: "testadmin",
@@ -143,5 +285,106 @@ func TestAddPostWithTagsFailCase(t *testing.T) {
 		assert.Equal(t, uniqueTag, dbPost.Tags)
 	} else {
 		assert.Equal(t, 401, nr.Code)
+	}
+}
+
+func TestAddPostWithDuplicateTagInDifferentPostsPassCase(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	tags := "#studyLamp#lighting"
+
+	if nr.Code == 200 {
+		post := m.Product{
+			UserId:      1,
+			Name:        "Cute Study Lamp",
+			Description: "Bought before 3 months. All slots are working",
+			Location:    "#studyLamp#lighting",
+			Dimensions:  "11*12*11",
+			Weight:      20,
+			Age:         2,
+			Count:       1,
+			Tags:        tags,
+		}
+		nr.Flush()
+		// ignore the login success message
+		io.ReadAll(nr.Body)
+		body, _ := json.Marshal(post)
+		req, _ := http.NewRequest("POST", "/create", strings.NewReader(string(body)))
+		req.Header.Set("Content-Type", "application/json")
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+		assert.Equal(t, 200, nr.Code)
+		var dbPost m.Product
+		jsonStr, _ := ioutil.ReadAll(nr.Body)
+		err := json.Unmarshal(jsonStr, &dbPost)
+		if err != nil {
+			fmt.Println(err)
+		}
+		assert.Equal(t, tags, dbPost.Tags) //this particular post will have studyLamp in the tags
+		//but in get all tags only one studyLamp is retreived.
+	}
+}
+
+func TestGetAllPostsTagsDuplicatePassCase(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	tag := "#chair#officechair#studyLamp#lamp#bulb#electricity#instantpot#cooking#electric#lighting"
+	if nr.Code == 200 {
+		post := m.Product{
+			UserId:      1,
+			Name:        "Office Chair",
+			Description: "All the wheels and functionality intact",
+			Location:    "3800 SW 34th Blvd",
+			Dimensions:  "10 x 10 x 10",
+			Weight:      110,
+			Age:         2,
+			Count:       1,
+			Tags:        tag,
+		}
+		nr.Flush()
+		body, _ := json.Marshal(post)
+		req, _ := http.NewRequest("GET", "/allTags", strings.NewReader(string(body)))
+		req.Header.Set("Content-Type", "application/json")
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+
+		assert.Equal(t, 200, nr.Code)
+		resp := nr.Body.String()
+
+		idx := strings.Index(resp, "[")
+
+		resp = string(resp[idx:])
+		resp = strings.Replace(resp, "[", "", -1)
+		resp = strings.Replace(resp, "]", "", -1)
+		resp = strings.Replace(resp, "\"", "", -1)
+		var b []string = strings.Split(resp, ",")
+		tags := strings.Join(b, "#")
+
+		if tags != "" {
+			tags = "#" + tags
+		}
+		//	fmt.Println(tags)
+		assert.Equal(t, tag, tags)
+
 	}
 }
