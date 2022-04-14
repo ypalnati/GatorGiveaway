@@ -41,6 +41,7 @@ func TestAddPostWithTagsPassCase(t *testing.T) {
 			Tags:        tag,
 		}
 		nr.Flush()
+		io.ReadAll(nr.Body)
 		body, _ := json.Marshal(post)
 		req, _ := http.NewRequest("POST", "/create", strings.NewReader(string(body)))
 		req.Header.Set("Content-Type", "application/json")
@@ -48,7 +49,63 @@ func TestAddPostWithTagsPassCase(t *testing.T) {
 		req.Header.Set("Cookie", cookieValue)
 		router.ServeHTTP(nr, req)
 		assert.Equal(t, 200, nr.Code)
+		var dbPost m.Product
+		jsonStr, _ := ioutil.ReadAll(nr.Body)
+		err := json.Unmarshal(jsonStr, &dbPost)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(dbPost.ID)
 		assert.Equal(t, tag, post.Tags)
+	}
+}
+
+func TestGetProductsByTagsSuccessCase(t *testing.T) {
+	login := m.Login{
+		Username: "testadmin",
+		Password: "TestAdmin@123",
+	}
+	payload, _ := json.Marshal(login)
+	nr := httptest.NewRecorder()
+	req1, _ := http.NewRequest("POST", "/login", strings.NewReader(string(payload)))
+	req1.Header.Set("Content-Type", "application/json")
+	req1.Header.Set("credentials", "include")
+	router.ServeHTTP(nr, req1)
+	cookieValue := nr.Result().Header.Get("Set-Cookie")
+	tags := []string{
+		"chair",
+		"studyLamp",
+		"lamp",
+		"bulb",
+		"electricity",
+		"instantpot",
+		"cooking",
+		"electric",
+		"lighting",
+	}
+	tag := "%23" + strings.Join(tags, "%23")
+	if nr.Code == 200 {
+		nr.Flush()
+		io.ReadAll(nr.Body)
+		url := fmt.Sprintf("/getProducts/%s", tag)
+		fmt.Println(url)
+		req, _ := http.NewRequest("GET", url, nil)
+		req1.Header.Set("credentials", "include")
+		req.Header.Set("Cookie", cookieValue)
+		router.ServeHTTP(nr, req)
+		// check assert for code
+		assert.Equal(t, 200, nr.Code)
+		// check the response body
+		var resp map[string][]m.Product
+		jsonStr, _ := ioutil.ReadAll(nr.Body)
+		fmt.Println(string(jsonStr))
+		err := json.Unmarshal(jsonStr, &resp)
+		if err != nil {
+			fmt.Println(err)
+		}
+		var product m.Product
+		testDb.First(8, &product)
+		assert.Equal(t, 8, int(resp["chair"][0].ID))
 	}
 }
 
