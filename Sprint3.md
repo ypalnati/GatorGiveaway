@@ -29,6 +29,8 @@
 
 [Front end Full Integration Demo](https://www.youtube.com/watch?v=PmTkiGaqkh8)
 
+[Cypress test Video](https://www.youtube.com/watch?v=jCkiPGLvqIg)
+
 ## Useful links of the project
 - [Gator Gibeaway Repo Link](https://github.com/raghusaripalli/GatorGiveaway) 
 - [Discussions link on git](https://github.com/raghusaripalli/GatorGiveaway/discussions)
