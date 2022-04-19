@@ -22,6 +22,7 @@ var users []m.User
 var posts []m.Product
 var orders []m.Order
 var router *gin.Engine
+var testDb *gorm.DB
 
 func setupTestDb(dbName string) *gorm.DB {
 	// Connection to the database with default configuration
@@ -167,13 +168,13 @@ func initData(db *gorm.DB) {
 
 func TestMain(m *testing.M) {
 	// setup database
-	db := setupTestDb(dbName)
+	testDb = setupTestDb(dbName)
 
 	// init data
-	initData(db)
+	initData(testDb)
 
 	// setup router
-	router = SetupRouter(db, storeName, sessionName)
+	router = SetupRouter(testDb, storeName, sessionName)
 
 	code := m.Run()
 

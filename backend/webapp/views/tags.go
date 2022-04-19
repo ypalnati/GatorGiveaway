@@ -2,12 +2,13 @@ package views
 
 import (
 	"net/http"
-	"strconv"
+	"strings"
 	m "webapp/model"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 
-	"strings"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -40,7 +41,11 @@ func removeDuplicates(tagList []string) []string {
 func removeTagDuplicates(tags string) string {
 	tagList := splitTagStringByHash(tags)
 	var list = removeDuplicates(tagList)
-	return joinStringList(list, "#")
+	tags = joinStringList(list, "#")
+	if tags != "" {
+		tags = "#" + tags
+	}
+	return tags
 }
 
 func GetAllTags(db *gorm.DB) gin.HandlerFunc {
@@ -77,5 +82,52 @@ func GetTagsOfParticularPost(db *gorm.DB) gin.HandlerFunc {
 		tags = removeDuplicates(tags)
 		c.JSON(http.StatusOK, tags)
 	}
+	return gin.HandlerFunc(fn)
+}
+
+func GetProductsByTags(db *gorm.DB) gin.HandlerFunc {
+
+	fn := func(c *gin.Context) {
+		// Get sessions
+		session := sessions.Default(c)
+
+		// Get user id from session
+		v := session.Get("uId")
+
+		// if there's no user id, return 400
+		if v == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "User is not logged in"})
+			return
+		}
+
+		//take tags from params
+		tags := c.Param("tags")
+
+		// get list of tags
+		tagList := splitTagStringByHash(tags)
+
+		// get all products
+		var products []m.Product
+		db.Find(&products)
+
+		// return map
+		tagMap := map[string][]m.Product{}
+
+		numberOfTags := len(tagList)
+		for i := 0; i < numberOfTags; i++ {
+			tag := tagList[i]
+			if tag != "" {
+				var matchedProducts []m.Product
+				for _, product := range products {
+					if strings.Contains(product.Tags, tag) {
+						matchedProducts = append(matchedProducts, product)
+					}
+				}
+				tagMap[tag] = matchedProducts
+			}
+		}
+		c.JSON(http.StatusOK, tagMap)
+	}
+	// return the loginHandlerfunction
 	return gin.HandlerFunc(fn)
 }
