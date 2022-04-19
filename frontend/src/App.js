@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div title='App Root'>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Header/>
           <div id="main-container">          
             <Routes>
