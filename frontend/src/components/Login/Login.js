@@ -1,14 +1,37 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography} from '@mui/material'
+import {Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography, Snackbar, IconButton, Alert} from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 
 function Login() {
     const [loginErrors, setLoginErrors] = useState({})
+    const [state, setState] = useState({
+      open: false,
+      vertical: 'top',
+      horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;  
     const navigate = useNavigate();
     const theme = createTheme();
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setState({...state, open: false});
+    };
+    const action = (      
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>      
+    );
     const callLoginApi = (e) => {
       e.preventDefault();
       fetch('http://localhost:8080/login', {
@@ -29,6 +52,7 @@ function Login() {
             navigate("/home")
           else if (r.status === 401) {
             console.log(r);
+            setState({...state, open:true})
             r.json().then((json)=>{
               console.log(json);
               let error = json["error"];
@@ -55,7 +79,6 @@ function Login() {
       // window.loginload()
     }, []);
     return (
-
       <ThemeProvider theme={theme}>
         <Grid container component="main" sx={{ height: '100vh' }}>
           <CssBaseline />
@@ -114,6 +137,17 @@ function Login() {
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
+                <Snackbar
+                    open={open}
+                    autoHideDuration={4000}
+                    anchorOrigin={{ vertical, horizontal }}
+                    onClose={handleClose}
+                    message="Username or Password is Invalid"
+                    action={action}
+                >
+                  <Alert onClose={handleClose} action = {action} severity="error"> Username or Password is Invalid </Alert>
+                </Snackbar>
+                
                 <Button
                   type="submit"
                   fullWidth
@@ -142,5 +176,4 @@ function Login() {
       
     );
   }
-
 export default Login;
