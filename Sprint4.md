@@ -1,3 +1,5 @@
+# Sprint 4 - Final Sprint
+
 ## Description of your application - 200 words max
 - GatorGiveaway is a common platform for users to sell their items/belongings and also to buy items they need. Its like ebay platform for UF students
 - This is developed as a web application portal using ReactJS as front end and GoLang to write backend services
