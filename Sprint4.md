@@ -21,7 +21,12 @@
   - Users can mark their products as favorite and can see those items in the favorites tab
 - *About Us:* 
   Details about all our developers
-  
+## BONUS
+- Remote Website url : [https://raghusaripalli.github.io/GatorGiveaway/](https://raghusaripalli.github.io/GatorGiveaway/)
+#### Remote deploy details
+- We have deployed backend services using amazon aws
+- For UI we have used git-hub pages to deploy our application 
+
 ## Demo video functionality - 3min max
 ## Cypress test video - 90sec max
 ![Alt text](media/CypressDemo.gif?raw=true "Cypress demo")
