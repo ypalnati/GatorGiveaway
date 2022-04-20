@@ -84,7 +84,7 @@ function Header() {
     const navigate = useNavigate();
     const callLogoutApi = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/logout', {
+        fetch('http://13.71.87.168/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {
