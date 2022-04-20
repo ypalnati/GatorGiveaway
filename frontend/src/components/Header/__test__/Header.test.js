@@ -108,3 +108,17 @@ test('Header component render test', () => {
     
   });
   
+  test('Home present in component', () => {
+    render(
+    <MemoryRouter>
+        <Header />
+    </MemoryRouter>
+   
+    ); 
+    
+ 
+    const linkElement = screen.getByText("Home")
+    expect(linkElement).toBeInTheDocument();
+   
+    
+  });
