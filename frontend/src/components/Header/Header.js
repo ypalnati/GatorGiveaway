@@ -28,9 +28,10 @@ function Header() {
     );
     const cookies = new Cookies();   
       const mainsession = cookies.get('mainsession');
+      console.log(mainsession)
     const displayDesktop = () => {
         return <Toolbar sx={{display: "flex", justifyContent: "space-between",}}>{gatorLogo} {gatorGiveAwayHeading} 
-            {mainsession != null? <div>{getMenuButtons()}</div> :<div></div>}
+            <div>{getMenuButtons()}</div>
         </Toolbar>;
       };
       
@@ -88,7 +89,7 @@ function Header() {
     const navigate = useNavigate();
     const callLogoutApi = (e) => {
         e.preventDefault();
-        fetch('http://13.71.87.168/logout', {
+        fetch('http://13.71.87.168:8080/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {

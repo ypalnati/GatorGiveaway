@@ -34,7 +34,7 @@ function Login() {
     );
     const callLoginApi = (e) => {
       e.preventDefault();
-      fetch('http://13.71.87.168/login', {
+      fetch('http://13.71.87.168:8080/login', {
         method: 'POST',
         credentials: 'include',
         headers: {
