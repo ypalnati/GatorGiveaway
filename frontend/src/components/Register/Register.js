@@ -11,7 +11,7 @@ function Register() {
   
     const callRegisterApi = (e) => {
       e.preventDefault();
-      fetch('http://localhost:8080/register', {
+      fetch('http://13.71.87.168/register', {
         method: 'POST',
         credentials: 'include',
         headers: {

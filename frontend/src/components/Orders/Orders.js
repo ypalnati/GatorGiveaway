@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 const Orders = () => {
     const [orders, setOrders] = useState()
     console.log("orders page here")    
-    fetch('http://localhost:8080/allOrders/', {
+    fetch('http://13.71.87.168/allOrders/', {
           method: 'GET',
           credentials: 'include',
           headers: {
