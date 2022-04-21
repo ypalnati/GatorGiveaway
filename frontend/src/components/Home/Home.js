@@ -87,7 +87,7 @@ const Home = () => {
       const mainsession = cookies.get('mainsession');
   const callLogoutApi = (e) => {
     e.preventDefault();
-    fetch('http://localhost:8080/logout', {
+    fetch('http://13.71.87.168/logout', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -108,7 +108,7 @@ const Home = () => {
   }
   const callDeleteApi = (c) => {
 
-    fetch('http://localhost:8080/delete/' + c, {
+    fetch('http://13.71.87.168/delete/' + c, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -147,7 +147,7 @@ const Home = () => {
       posts
     }))
     
-    fetch('http://localhost:8080/placeOrder', {
+    fetch('http://13.71.87.168/placeOrder', {
       method: 'POST',
         credentials: 'include',
         headers: {
@@ -174,7 +174,7 @@ const Home = () => {
      console.log(c.isFav)
      var f = !c.isFav
      console.log(f)
-    fetch('http://localhost:8080/update/' + JSON.stringify(c.ID), {
+    fetch('http://13.71.87.168/update/' + JSON.stringify(c.ID), {
       method: 'PATCH',
       credentials: 'include',
       headers: {
@@ -197,7 +197,7 @@ const Home = () => {
   
     /* e.preventDefault();
     console.log(e.target.elements);
-    fetch('http://localhost:8080/update/' + selectedPost, {
+    fetch('http://13.71.87.168/update/' + selectedPost, {
       method: 'PATCH',
       credentials: 'include',
       headers: {
@@ -232,7 +232,7 @@ const Home = () => {
     handleClose();
     S3FileUpload.uploadFile(selectedFile, config)
       .then(data => {
-        fetch('http://localhost:8080/create', {
+        fetch('http://13.71.87.168/create', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -264,7 +264,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    fetch('http://localhost:8080/read', {
+    fetch('http://13.71.87.168/read', {
       method: 'GET',
       credentials: 'include',
       headers: {

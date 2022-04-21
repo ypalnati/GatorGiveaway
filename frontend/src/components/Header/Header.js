@@ -11,7 +11,9 @@ const headersData = [
       favLabel: "Favorites",
       favLink: "/favorites",
       ordersLabel: "Orders",
-      ordersLink: "/orders"
+      ordersLink: "/orders",
+      homeLabel: "Home",
+      homeLink: "/home"
     },            
   ];
 
@@ -33,9 +35,20 @@ function Header() {
       };
       
     const getMenuButtons = () => {
-        return headersData.map(({ordersLabel, ordersLink, label, href, favLabel, favLink }) => {
+        return headersData.map(({homeLabel, homeLink, ordersLabel, ordersLink, label, href, favLabel, favLink }) => {
           return (
             <>
+              <Button
+              {...{
+                key: homeLabel,
+                color: "inherit",
+                to: homeLink,
+                component: RouterLink,
+              }}
+            >
+              {homeLabel}
+            </Button>
+
               	<Button
               {...{
                 key: ordersLabel,
@@ -75,7 +88,7 @@ function Header() {
     const navigate = useNavigate();
     const callLogoutApi = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/logout', {
+        fetch('http://13.71.87.168/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {
