@@ -14,35 +14,36 @@ const Orders = () => {
           }
         })
           .then(response => {
+            console.log('remoSsss')
             console.log(response)
-            return response.json()
           })
           .then(jsondata => {
+            console.log('remoS')
+            console.log(jsondata)
             console.log(jsondata['Orders'])
             setOrders(jsondata['Orders'])
           })
     },[])
     
     return(
-      <Box sx={{ flexGrow: 1 }}>        
-      
-      <Grid container spacing={1}>
-        {orders != null && orders.length > 0 ? orders.map(function (c, i) {
-          console.log(c['posts'])
-          c['posts'] != null && c['posts'].length > 0 ? c['posts'].map(function (p, j) {
-              <Card sx={{ maxWidth: 345 }} key={j}>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    Product Id: {p.productId}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Count: {p.count}
-                  </Typography>
-                </CardContent>                  
-              </Card>
-        }):<>No Items Found</> }) : <Grid key={0} item xs={4}><Typography gutterBottom variant="h5" component="div">No Orders Placed</Typography></Grid>}
-      </Grid>         
-
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={1}>
+          {orders != null && orders.length > 0 ? orders.map((c, i) => { console.log(c['posts']); return (
+            c['posts'] != null && c['posts'].length > 0 ? c['posts'].map((p, j) => { return (
+              <Grid item>
+                <Card sx={{ maxWidth: 345 }} key={j}>
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      Product Id: {p.productId}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Count: {p.count}
+                    </Typography>
+                  </CardContent>                  
+                </Card>
+              </Grid>
+          )}):<>No Items Found</> )}) : <Grid key={0} item xs={4}><Typography gutterBottom variant="h5" component="div">No Orders Placed</Typography></Grid>}
+        </Grid>
     </Box>
     );    
       

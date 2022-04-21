@@ -31,11 +31,11 @@
 - For UI we have used git-hub pages to deploy our application 
 
 ## Demo video functionality - 3min max
-- Functionality Video - [Full Video in Youtube](https://www.youtube.com/watch?v=PmTkiGaqkh8)
+- Functionality Video - [Full Video in Youtube](https://youtu.be/Yqw4yih4Z9A)
 ## Cypress test video - 90sec max
 ![Alt text](media/CypressDemo.gif?raw=true "Cypress demo")
 ## Backend demo/unit test video - 90sec max
-- Video Link: [youtube backend video link](https://www.youtube.com/watch?v=Ub0Ar11qmyI)
+- Video Link: [youtube backend video link](https://youtu.be/Phvgpkpf3hw)
 ## Unit Tests Backend Summary
 ![unitTestBackend](https://user-images.githubusercontent.com/22216660/164368980-c767e7ec-6338-41cf-8739-12f031d7b50b.gif)
 <details>
