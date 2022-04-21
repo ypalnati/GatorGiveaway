@@ -2,6 +2,7 @@ import {Link as RouterLink} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import {AppBar, Toolbar, Typography, Avatar, Button, IconButton} from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Cookies from 'universal-cookie';
 
 const headersData = [    
     {
@@ -23,11 +24,14 @@ function Header() {
     const gatorLogo = (
         <Avatar alt="gator-logo" src="/logo192.png"/>
     );
+    const cookies = new Cookies();   
+      const mainsession = cookies.get('mainsession');
     const displayDesktop = () => {
         return <Toolbar sx={{display: "flex", justifyContent: "space-between",}}>{gatorLogo} {gatorGiveAwayHeading} 
-            <div>{getMenuButtons()}</div> 
+            {mainsession != null? <div>{getMenuButtons()}</div> :<div></div>}
         </Toolbar>;
-      };    
+      };
+      
     const getMenuButtons = () => {
         return headersData.map(({ordersLabel, ordersLink, label, href, favLabel, favLink }) => {
           return (

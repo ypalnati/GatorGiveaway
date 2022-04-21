@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from 'react-router-dom';
 import {CssBaseline, Box, Typography, Container, Link} from '@mui/material';
 
 import './Footer.css'
@@ -26,6 +27,7 @@ const footerStyle = {
       width: '100%',
   }
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <div>
       <CssBaseline />      
@@ -34,8 +36,8 @@ export default function Footer() {
         sx={footerStyle}
       >
         <Container maxWidth="sm">
-          <Link href="/aboutus" variant="body2" color="#FFFEFE" sx={{ml:2, px: 2, align: 'left'}}>About Us</Link>
-          <Link id="contactus" href="/contactus" variant="body2" color="#FFFEFE" sx={{mr:2, px: 2, align: 'right'}}>Contact Us</Link>
+          <Link onClick={()=>navigate("/aboutus")} href="" variant="body2" color="#FFFEFE" sx={{ml:2, px: 2, align: 'left'}}>About Us</Link>
+          <Link id="contactus" onClick={()=>navigate("/contactus")} href="" variant="body2" color="#FFFEFE" sx={{mr:2, px: 2, align: 'right'}}>Contact Us</Link>
           <Copyright sx={{mr:2, align: 'center'}}/>
         </Container>
       </Box>

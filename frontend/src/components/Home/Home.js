@@ -24,6 +24,7 @@ import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { red } from '@mui/material/colors';
+import Cookies from 'universal-cookie';
 const S3_BUCKET = 's3ufsebucket';
 const REGION = 'us-east-2';
 const ACCESS_KEY = 'AKIA5S2N4Y6VJGQX6T4T';
@@ -82,6 +83,8 @@ const Home = () => {
   const handleFileInput = (e) => {
       setSelectedFile(e.target.files[0]);
     }
+    const cookies = new Cookies();   
+      const mainsession = cookies.get('mainsession');
   const callLogoutApi = (e) => {
     e.preventDefault();
     fetch('http://localhost:8080/logout', {
@@ -93,8 +96,10 @@ const Home = () => {
     })
       .then(
         (r) => {
-          if (r.status === 200)
-            navigate("/")
+          if (r.status === 200) {
+            cookies.remove('mainsession');
+            //navigate("/")
+          }
         },
         (r) => {
           console.log(r)

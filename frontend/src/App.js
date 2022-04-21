@@ -13,12 +13,12 @@ import Favorite from './components/Favorites/Favorites'
 import Orders from './components/Orders/Orders'
 
 const App = () => {
-
   return (
     <div title='App Root'>
+
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Header/>
-          <div id="main-container">          
+          <div id="main-container">
             <Routes>
               <Route path="/" exact element={<Login />} />
               <Route path="/home" exact element={<Home />} />
