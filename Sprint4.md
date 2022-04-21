@@ -1,8 +1,10 @@
 # Sprint 4 - Final Sprint
 
 ## Description of your application - 200 words max
+##Idea
+Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. There are many groups, and it's very hard to keep track of those groups and posts.
 - GatorGiveaway is a common platform for users to sell their items/belongings and also to buy items they need. Its like ebay platform for UF students
-- This is developed as a web application portal using ReactJS as front end and GoLang to write backend services
+- This is developed as a web application portal using ReactJS as front end and GoLang to write backend services.
 
 #### Technical Infrastructure leveraged in this project
 - AWS S3 for block storage of images/files
@@ -23,8 +25,11 @@
   - Users can mark their products as favorite and can see those items in the favorites tab
 - *About Us:* 
   Details about all our developers
+- *Tags*
+  Posts can be tagged which will be useful to search post by tags.
 ## BONUS
 - Remote Website url : [https://raghusaripalli.github.io/GatorGiveaway/](https://raghusaripalli.github.io/GatorGiveaway/)
+- Backend deployed url : http://13.71.87.168
 #### Remote deploy details
 - We have deployed backend services using amazon aws
 - For UI we have used git-hub pages to deploy our application 
@@ -33,6 +38,8 @@
 ## Cypress test video - 90sec max
 ![Alt text](media/CypressDemo.gif?raw=true "Cypress demo")
 ## Backend unit test video - 90sec max
+![BackendUnitTestsNew](https://user-images.githubusercontent.com/28947831/164368630-5cc80779-61aa-47d3-826b-0226214410ac.gif)
+
 ## Unit Tests Backend Summary
 ## Component testing suite UI results
 ![Alt text](media/UI_ComponentTestingSuite.png?raw=true "Component testing results")
