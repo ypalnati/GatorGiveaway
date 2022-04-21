@@ -1102,7 +1102,8 @@ Example
 `Code: 200 OK`
 	
 #### GIF
-![GetTagsOfAllPosts](https://user-images.githubusercontent.com/22216660/161361160-af859ae2-e114-4ad4-ad9e-b63bcd14fca2.gif)
+![GetAllTags](https://user-images.githubusercontent.com/28947831/164374143-5bdf94b9-2fd0-4696-a958-a145f45ec7ed.gif)
+
 
 </details>
 <details>
@@ -1143,7 +1144,8 @@ Example
 `Code: 200 OK`
 	
 #### GIF
-![GetTagsOfaParticularPost](https://user-images.githubusercontent.com/22216660/161361160-af859ae2-e114-4ad4-ad9e-b63bcd14fca2.gif)
+![GetTagsOfParticularPost](https://user-images.githubusercontent.com/28947831/164374116-37534cc3-faaf-43c8-8522-06ae0a7f0645.gif)
+
 
 </details>
 <details>
@@ -1217,7 +1219,8 @@ Example
 `Code: 200 OK`
 	
 #### GIF
-![GetTagsOfaParticularPost](https://user-images.githubusercontent.com/22216660/161361160-af859ae2-e114-4ad4-ad9e-b63bcd14fca2.gif)
+![GetPostsWithTags](https://user-images.githubusercontent.com/28947831/164374069-698d88bb-694b-4fe5-9c1c-f7303ffe5b65.gif)
+
 
 </details>
 
