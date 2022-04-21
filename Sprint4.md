@@ -1,14 +1,12 @@
 # Sprint 4 - Final Sprint
 
 ## Description of your application - 200 words max
-##Idea
-Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. There are many groups, and it's very hard to keep track of those groups and posts.
 - GatorGiveaway is a common platform for users to sell their items/belongings and also to buy items they need. Its like ebay platform for UF students
-- This is developed as a web application portal using ReactJS as front end and GoLang to write backend services.
+- This is developed as a web application portal using ReactJS as front end and GoLang to write backend services
 
 #### Technical Infrastructure leveraged in this project
 - AWS S3 for block storage of images/files
-- AWS EC2 for deploying backend services to remote server
+- Azure Virtual Machine for deploying backend services to remote server
 - Git Hub pages for deploying UI to remote server
 - GORM for persistance framework in GoLang
 - GIN for webservice framework in GoLang
@@ -25,22 +23,64 @@ Generally, all the giveaways and sales of old stuff happen in WhatsApp groups. T
   - Users can mark their products as favorite and can see those items in the favorites tab
 - *About Us:* 
   Details about all our developers
-- *Tags*
-  Posts can be tagged which will be useful to search post by tags.
 ## BONUS
 - Remote Website url : [https://raghusaripalli.github.io/GatorGiveaway/](https://raghusaripalli.github.io/GatorGiveaway/)
-- Backend deployed url : http://13.71.87.168
+- Backend URL: [Cloud link for Backend APIs - http://13.71.87.168:8080](http://13.71.87.168:8080)
 #### Remote deploy details
 - We have deployed backend services using amazon aws
 - For UI we have used git-hub pages to deploy our application 
 
 ## Demo video functionality - 3min max
+- Functionality Video - [Full Video in Youtube](https://www.youtube.com/watch?v=PmTkiGaqkh8)
 ## Cypress test video - 90sec max
 ![Alt text](media/CypressDemo.gif?raw=true "Cypress demo")
-## Backend unit test video - 90sec max
-![BackendUnitTestsNew](https://user-images.githubusercontent.com/28947831/164368630-5cc80779-61aa-47d3-826b-0226214410ac.gif)
-
+## Backend demo/unit test video - 90sec max
+- Video Link: [youtube backend video link](https://www.youtube.com/watch?v=Ub0Ar11qmyI)
 ## Unit Tests Backend Summary
+![unitTestBackend](https://user-images.githubusercontent.com/22216660/164368980-c767e7ec-6338-41cf-8739-12f031d7b50b.gif)
+<details>
+  <summary>Place Order API Tests</summary>
+<hr>
+
+- TestPlaceOrderPassCase
+	- Tested the /placeOrder API by logging in with a user and placing an order using posts he could see
+- TestPlaceOrderNotLoggedInFailCase
+	- Tested the /placeOrder API NOT logging in with user, this return status of UNAUTHORIZED
+- TestPlaceOrderJsonFieldsMissing
+	- Json Fileds missing is handled in this test
+	
+<hr>
+
+</details>
+<details>
+  <summary>Cancel Order API Tests</summary>
+<hr>
+
+- TestCancelOrderSuccessCase
+	- Tested the /cancelOrder API by logging in with a user and cancelling the user order by order id, STATUS is updated to 2
+- TestCancelOrderUserNotLoggedInCase
+	- Tested the /cancelOrder API NOT logging in with user, this return status of UNAUTHORIZED
+- TestCancelOrderOrderNotExistsCase
+	- Order Id not existing in this case is handled, with a positive response and message in json response.
+	
+<hr>
+
+</details>
+<details>
+  <summary>List Orders API Tests</summary>
+<hr>
+
+- TestGetAllOrdersPassCase
+	- Lists all orders by calling the /alOrders, it returns in a pagination format
+- TestGetParticularOrderPassCase
+	- List Order based on the Order ID, return a single json
+- TestGetParticularOrderFailCase
+	- Provided order ID if it's not present, returns a 409 status and validated the same.
+	
+<hr>
+
+</details>
+
 ## Component testing suite UI results
 ![Alt text](media/UI_ComponentTestingSuite.png?raw=true "Component testing results")
 
@@ -1178,49 +1218,6 @@ Example
 	
 #### GIF
 ![GetTagsOfaParticularPost](https://user-images.githubusercontent.com/22216660/161361160-af859ae2-e114-4ad4-ad9e-b63bcd14fca2.gif)
-
-</details>
-
-<details>
-  <summary>Place Order API Tests</summary>
-<hr>
-
-- TestPlaceOrderPassCase
-	- Tested the /placeOrder API by logging in with a user and placing an order using posts he could see
-- TestPlaceOrderNotLoggedInFailCase
-	- Tested the /placeOrder API NOT logging in with user, this return status of UNAUTHORIZED
-- TestPlaceOrderJsonFieldsMissing
-	- Json Fileds missing is handled in this test
-	
-<hr>
-
-</details>
-<details>
-  <summary>Cancel Order API Tests</summary>
-<hr>
-
-- TestCancelOrderSuccessCase
-	- Tested the /cancelOrder API by logging in with a user and cancelling the user order by order id, STATUS is updated to 2
-- TestCancelOrderUserNotLoggedInCase
-	- Tested the /cancelOrder API NOT logging in with user, this return status of UNAUTHORIZED
-- TestCancelOrderOrderNotExistsCase
-	- Order Id not existing in this case is handled, with a positive response and message in json response.
-	
-<hr>
-
-</details>
-<details>
-  <summary>List Orders API Tests</summary>
-<hr>
-
-- TestGetAllOrdersPassCase
-	- Lists all orders by calling the /alOrders, it returns in a pagination format
-- TestGetParticularOrderPassCase
-	- List Order based on the Order ID, return a single json
-- TestGetParticularOrderFailCase
-	- Provided order ID if it's not present, returns a 409 status and validated the same.
-	
-<hr>
 
 </details>
 
